@@ -26,6 +26,21 @@
         }
     }
 
+    .article-card {
+        @apply flex flex-col gap-3 p-4 bg-white rounded-lg shadow-lg;
+    }
+
+    .card-title {
+        @apply flex items-center justify-between mt-3;
+
+        h3 {
+            @apply text-xl font-semibold;
+        }
+    }
+
+    .author {
+        @apply flex items-center gap-2 mt-2;
+    }
 
 }
 
