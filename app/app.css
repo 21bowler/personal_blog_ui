@@ -34,7 +34,7 @@
         @apply flex items-center justify-between mt-3;
 
         h3 {
-            @apply text-xl font-semibold;
+            @apply text-2xl font-semibold truncate;
         }
     }
 
@@ -42,6 +42,17 @@
         @apply flex items-center gap-2 mt-2;
     }
 
+    .articles-grid {
+        @apply grid grid-cols-1 sm:grid-cols-3 gap-4 container;
+    }
+
+    .article-date {
+        @apply text-sm text-gray-400 my-1;
+    }
+
+    .article-description {
+        @apply text-gray-500 leading-5 mb-10 text-sm sm:text-base
+    }
 }
 
 @layer utilities {
@@ -53,6 +64,41 @@
     .search {
         @apply outline-none border border-gray-300 rounded-full px-4 pl-10 py-2 w-full placeholder:text-gray-500 placeholder:italic focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent;
     }
+
+    .tag {
+        @apply text-[#54BE7C] text-sm;
+    }
+
+    .img-pulse {
+        @apply bg-gray-400 rounded-lg w-full h-40 animate-pulse;
+    }
+
+    .avatar {
+        @apply bg-gray-400 rounded-full w-10 h-10;
+    }
+
+    .btn {
+        @apply bg-white px-4 py-2 rounded-lg cursor-pointer flex items-center gap-2 hover:shadow-lg transition-shadow duration-300;
+    }
+
+    /*.btn:hover svg {*/
+    /*    @apply */
+    /*}*/
+    /*@keyframes bounce-subtle {*/
+    /*    0%, 100% {*/
+    /*        transform: translateY(0);*/
+    /*    }*/
+    /*    50% {*/
+    /*        transform: translateY(4px);*/
+    /*    }*/
+    /*}*/
+    /*.animate-bounce-subtle {*/
+    /*    animation: bounce-subtle 1s ease-in-out infinite;*/
+    /*}*/
+    .flex-center {
+        @apply flex justify-center items-center;
+    }
+
 }
 
 html, body {
