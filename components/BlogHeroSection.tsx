@@ -1,6 +1,6 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
-const HeroSection = () => {
+const BlogHeroSection = () => {
   return (
     <section className="hero container">
       <p className="pill">Our blog</p>
@@ -20,4 +20,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default BlogHeroSection;
