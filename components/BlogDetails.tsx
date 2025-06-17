@@ -6,7 +6,7 @@ const BlogDetails = () => {
       {/*  Container */}
       <div>
         {/*  Header details meta data*/}
-        <div className="">
+        <div>
           <h2 className="font-semibold text-2xl sm:text-4xl">
             The Future of User Centered Design
           </h2>
