@@ -24,7 +24,7 @@ const Header = () => {
     <header className={`container ${navbar ? 'navbar active' : 'navbar'}`}>
       <div>
         <Link to="/">
-          <h1 className="font-bold text-2xl">DevLog</h1>
+          <h1 className="font-bold text-2xl">Devish</h1>
         </Link>
       </div>
 
