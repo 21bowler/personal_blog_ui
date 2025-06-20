@@ -8,10 +8,11 @@ import {
 import ArticleCard from './ArticleCard';
 import CallToAction from './CTA';
 import Footer from './Footer';
+import AuthorMeta from './AuthorMeta';
 
 const BlogDetails = () => {
   return (
-    <section className="container">
+    <section className="relative container">
       {/*  Container */}
       <div className="pt-4 pb-8">
         {/* Header details meta data */}
@@ -25,20 +26,7 @@ const BlogDetails = () => {
           </p>
 
           {/* Article Meta-Data */}
-          <article className="flex text-sm gap-4 items-center justify-center mt-4">
-            <span className="flex items-center gap-1">
-              <PencilIcon className="size-5" />
-              <span className="text-gray-600">Stephen Chao</span>
-            </span>
-            <span className="flex items-center gap-1">
-              <Square3Stack3DIcon className="size-5" />
-              <span className="text-gray-600">Design</span>
-            </span>
-            <span className="flex items-center gap-1">
-              <ClockIcon className="size-5" />
-              <span className="text-gray-600">12 min. read</span>
-            </span>
-          </article>
+          <AuthorMeta justify="justify-center" />
 
           {/*Image*/}
           <div></div>
