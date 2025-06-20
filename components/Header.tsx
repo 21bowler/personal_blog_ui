@@ -10,6 +10,16 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const changeBackground = () => {
+    if (window.scrollY >= 100) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+
+  window.addEventListener('scroll', changeBackground);
+
   return (
     <header className={`container ${navbar ? 'navbar active' : 'navbar'}`}>
       <div>
