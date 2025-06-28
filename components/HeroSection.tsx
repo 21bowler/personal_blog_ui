@@ -1,51 +1,48 @@
 import { Link } from 'react-router';
 import { ArrowDownIcon, ArrowRightIcon } from '@heroicons/react/24/solid';
+import ActionButton from './ActionBtn';
 
 const HeroSection = () => {
   return (
     <>
       <section className="container">
-        <div className="space-y-2 py-22 border-2 ">
-          {/*<div className="w-full border-2 h-full" />*/}
+        <div className="relative space-y-2 py-22 ">
           <h2 className="font-bold text-3xl sm:text-5xl ">
-            Code. Create. Share
+            Code. <span className="text-blue-600">Create</span>. Share
           </h2>
           <p className="text-gray-600 sm:w-1/2">
             Devish is where I share Web Development Tutorials, thoughts, and
             experiments from my coding Journey.
           </p>
           <div className="flex items-center py-2 gap-4">
+            <ActionButton />
             <Link
               to="/"
-              className="flex items-center gap-4 bg-[#00561D] text-white py-2 px-4 rounded-full transition-all hover:shadow-lg hover:bg-[#007A2D]"
+              className="flex text-sm items-center gap-4 bg-white text-black py-4 px-8 rounded-full transition-all hover:shadow-lg hover:shadow-md"
             >
-              Read More
-              <span className="px-1.5 py-1 rounded-full bg-white">
-                <ArrowRightIcon className="size-5 fill-black rounded-full" />
-              </span>
-            </Link>
-            <Link
-              to="#"
-              className=" bg-white  rounded-full py-2 px-8 hover:shadow-lg transition-all"
-            >
-              About Me
+              Read more
             </Link>
           </div>
 
           {/*  Explore More btn*/}
-          <div className="flex">
-            <Link to="#" className="flex gap-3 items-center">
+          <div className="flex absolute bottom-3 right-0">
+            <Link to="#" className="flex text-sm gap-3 items-center">
               Explore More{' '}
-              <span className="px-1.5 py-1 rounded-full bg-gray-200">
-                <ArrowDownIcon className="size-5" />
+              <span className="p-[8px] rounded-full bg-gray-200">
+                <ArrowDownIcon className="size-4" />
               </span>
             </Link>
           </div>
         </div>
       </section>
-      <section className="text-center space-y-4 text-white bg-[#0A190F] container py-10">
+
+      {/* About Devish Section */}
+      <section
+        id="about"
+        className="flex flex-col text-center space-y-4 text-white bg-[#0A190F] py-[2rem]"
+      >
         <h3 className="text-3xl font-bold">About Devish</h3>
-        <p className="text-base text-amber-100 w-full sm:max-w-96 border-red-400">
+        <p className="text-base self-center space-y-2 text-amber-100 sm:w-1/2">
           Devlog is my personal blog where I document my journey as a developer
           — from building side projects and learning new tech to sharing
           tutorials and insights. It's a space to learn in public, grow through
