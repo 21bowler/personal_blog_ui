@@ -11,6 +11,42 @@ interface ArticleInput {
   slug: string;
 }
 
+// TODO: ADD Proper Error Handling for each Service
+
+/** Uploading an image to supabase storage */
+export const uploadImage = async (file: File): Promise<string | null> => {
+  // create unique file path for security
+  const fileExt = file.name.split('.').pop();
+  const safeFileName = `${file.name.replace(
+    /[^a-zA-Z0-9]/g,
+    '_',
+  )}-${Date.now()}`;
+  const filepath = `${safeFileName}.${fileExt}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from('article-images')
+    .upload(filepath, file);
+
+  if (uploadError) {
+    throw new Error(`Error uploading image: ${uploadError.message}`);
+  }
+
+  const { data: publicUrl, error: urlError } = await supabase.storage
+    .from('article-images')
+    .getPublicUrl(filepath);
+
+  //Error handling for public url
+  if (urlError) {
+    throw new Error(`Error fetching public url: ${urlError.message}`);
+  }
+
+  if (!publicUrl) {
+    throw new Error('No public url found');
+  }
+
+  return publicUrl.publicUrl;
+};
+
 /** Creating an article*/
 export async function createArticle(article: ArticleInput) {
   console.log('ENTERED SECTION');
