@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import {
   H1Icon,
   H2Icon,
