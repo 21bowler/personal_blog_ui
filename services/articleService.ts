@@ -89,7 +89,16 @@ export async function fetchArticleBySlug(slug: string) {
       .eq('slug', slug);
 
     if (articleError) {
-      console.error(`Error fetching article by slug: ${articleError.message}`);
+      console.error(
+        `Supabase fetchArticleBySlug Error: ${articleError.message}`,
+      );
+      throw new Error(
+        `Failed to fetch article by slug "${slug}": ${articleError.message}`,
+      );
+    }
+
+    if (!articleData) {
+      return null;
     }
 
     return articleData;
