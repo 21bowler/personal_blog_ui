@@ -44,7 +44,11 @@ export const uploadImage = async (file: File): Promise<string | null> => {
     throw new Error('No public url found');
   }
 
-  return publicUrl.publicUrl;
+    return publicUrl.publicUrl;
+  } catch (error) {
+    console.error('Upload image error: ', error);
+    throw error;
+  }
 };
 
 /** Creating an article*/
