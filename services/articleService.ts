@@ -116,8 +116,14 @@ export async function fetchArticleById(id: number) {
       .eq('id', id);
 
     if (articleError) {
-      console.error(`Error fetching article by id: ${articleError.message}`);
-      return;
+      console.error(
+        `Failed to fetch article by id --> ${id}: ${articleError.message}`,
+      );
+      throw new Error(`Error fetching article by id: ${articleError.message}`);
+    }
+
+    if (!articleData) {
+      return null;
     }
 
     return articleData;
