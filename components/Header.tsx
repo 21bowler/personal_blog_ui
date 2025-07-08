@@ -1,24 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { navLinks } from '../lib/data';
 import { Link, NavLink } from 'react-router';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [navbar, setNavbar] = useState(false);
 
   const toggleMenuOpen = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen((prev) => !prev);
   };
 
-  const changeBackground = () => {
+  //TODO1: add useCallback for Optimization
+  const changeBackground = useCallback(() => {
     if (window.scrollY >= 100) {
       setNavbar(true);
     } else {
       setNavbar(false);
     }
-  };
+  }, []);
 
-  window.addEventListener('scroll', changeBackground);
+  useEffect(() => {
+    window.addEventListener('scroll', changeBackground);
+
+    return () => {
+      window.removeEventListener('scroll', changeBackground);
+    };
+  }, []);
 
   return (
     <header className={`container ${navbar ? 'navbar active' : 'navbar'}`}>
@@ -88,7 +96,7 @@ const Header = () => {
           </nav>
         </div>
       )}
-    </section>
+    </header>
   );
 };
 
