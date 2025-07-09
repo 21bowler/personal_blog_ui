@@ -18,7 +18,12 @@ const ArticleCard = ({
   return (
     <article className="container article-card">
       <div>
-        <div className="img-pulse" />
+        {/*<div className="img-pulse" />*/}
+        <img
+          src={imgUrl}
+          alt={title}
+          className="rounded-md w-full h-48 object-cover"
+        />
       </div>
       <div>
         <div>
