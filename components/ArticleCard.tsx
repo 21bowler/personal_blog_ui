@@ -14,6 +14,7 @@ const ArticleCard = ({
   tag,
   date,
   description,
+  imgUrl,
   author,
 }: ArticleResourceProps) => {
   return (
