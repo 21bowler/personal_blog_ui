@@ -5,6 +5,7 @@ interface ArticleResourceProps {
   tag?: string;
   date: string;
   description: string;
+  imgUrl: string;
   author: string;
 }
 
