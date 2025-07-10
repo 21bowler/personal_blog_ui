@@ -2,12 +2,26 @@ import React from 'react';
 import { EyeIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router';
 
-const Form = () => {
+interface FormProps {
+  formType: string;
+  subtitleText: string;
+  togglePromptText: string;
+  buttonText: string;
+  toggleLink: string;
+}
+
+const AuthForm = ({
+  formType,
+  subtitleText,
+  togglePromptText,
+  buttonText,
+  toggleLink,
+}: FormProps) => {
   return (
     <section className="container h-full flex flex-col justify-center w-[400px]">
       <div className="mb-10">
         <h1 className="mt-8 mb-2 text-2xl lg:text-3xl">Get Started</h1>
-        <h2 className="text-sm text-gray-500">Sign in to your account</h2>
+        <h2 className="text-sm text-gray-500">{subtitleText}</h2>
       </div>
       <div>
         {/* Other providers can be added here*/}
@@ -62,20 +76,20 @@ const Form = () => {
               type="submit"
               className="outline-none font-regular text-white border border-aquamarine-700/75 text-base bg-aquamarine-600 px-4 py-2 cursor-pointer rounded-md transition-all outline-0 hover:bg-aquamarine-700"
             >
-              Sign In
+              {buttonText}
             </button>
           </div>
         </form>
       </div>
 
       <div className="my-8 text-center text-sm">
-        <span className="">Dont have an account? </span>
-        <Link to="/auth/sign-up" className="underline font-semibold">
-          Sign Up Now
+        <span className="">{togglePromptText} </span>
+        <Link to={toggleLink} className="underline font-semibold">
+          {buttonText === 'Sign Up' ? 'Sign In' : 'Sign Up'} Now
         </Link>
       </div>
     </section>
   );
 };
 
-export default Form;
+export default AuthForm;
