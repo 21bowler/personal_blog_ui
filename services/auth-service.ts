@@ -1,4 +1,5 @@
 import { supabase } from '~/supabase-client';
+import type { User, Session } from '@supabase/supabase-js';
 
 export interface SignInCredentials {
   email: string;
@@ -47,6 +48,7 @@ export const getCurrentUser = async (): Promise<User | null> => {
   return user;
 };
 
+// Get Current Session
 export const getCurrentSession = async (): Promise<Session | null> => {
   const {
     data: { session },
@@ -59,4 +61,14 @@ export const getCurrentSession = async (): Promise<Session | null> => {
   }
 
   return session;
+};
+
+// Sign Out the Current User
+export const signOut = async () => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error('Error Signing Out Current User.', error.message);
+    throw new Error('Error Signing Out Current User');
+  }
 };
