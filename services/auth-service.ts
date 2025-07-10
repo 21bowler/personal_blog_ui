@@ -31,3 +31,32 @@ export const signIn = async (credentials: SignUpCredentials) => {
 
   return data;
 };
+
+// Get Current User logged In
+export const getCurrentUser = async (): Promise<User | null> => {
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) {
+    console.error('Error Getting Current User.', error.message);
+    throw new Error('Error getting Current User.');
+  }
+
+  return user;
+};
+
+export const getCurrentSession = async (): Promise<Session | null> => {
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    console.error('Error getting Current Session', error.message);
+    throw new Error('Error Getting Current session!');
+  }
+
+  return session;
+};
