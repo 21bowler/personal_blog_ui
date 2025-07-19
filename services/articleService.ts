@@ -1,5 +1,4 @@
 import { supabase } from '~/supabase-client';
-import { redirect } from 'react-router';
 
 interface ArticleInput {
   title: string;
@@ -15,55 +14,62 @@ interface ArticleInput {
 
 /** Uploading an image to supabase storage */
 export const uploadImage = async (file: File): Promise<string | null> => {
-  // create unique file path for security
-  const fileExt = file.name.split('.').pop();
-  const safeFileName = `${file.name.replace(
-    /[^a-zA-Z0-9]/g,
-    '_',
-  )}-${Date.now()}`;
-  const filepath = `${safeFileName}.${fileExt}`;
-
-  const { error: uploadError } = await supabase.storage
-    .from('article-images')
-    .upload(filepath, file);
-
-  if (uploadError) {
-    throw new Error(`Error uploading image: ${uploadError.message}`);
+  // TODO: Proper row level policy to be implemented before PRODUCTION.
+  if (!file) {
+    throw new Error('No file selected');
   }
 
-  const { data: publicUrl, error: urlError } = await supabase.storage
-    .from('article-images')
-    .getPublicUrl(filepath);
+  try {
+    //safely get file extension
+    const fileName = file.name || '';
 
-  //Error handling for public url
-  if (urlError) {
-    throw new Error(`Error fetching public url: ${urlError.message}`);
-  }
+    // create a unique file path for security
+    const fileExt = fileName.split('.').pop() || 'jpg';
+    const baseFileName = fileName
+      .split('.')[0]
+      .replace(/[^a-zA-Z0-9]/g, '_')
+      .substring(0, 50);
 
-  if (!publicUrl) {
-    throw new Error('No public url found');
-  }
+    const filepath = `${baseFileName}_${Date.now()}.${fileExt}`;
+    // const filepath = `${file.name}-${Date.now()}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('article-images')
+      .upload(filepath, file);
+
+    if (uploadError) {
+      throw new Error(`Error uploading image: ${uploadError.message}`);
+    }
+
+    const { data: publicUrl } = supabase.storage
+      .from('article-images')
+      .getPublicUrl(filepath);
+
+    // if no public url found, throw error.
+    if (!publicUrl) {
+      throw new Error('No public url found');
+    }
 
     return publicUrl.publicUrl;
   } catch (error) {
     console.error('Upload image error: ', error);
-    throw error;
+    throw new Error(
+      `Failed to upload image: ${
+        error instanceof Error ? error.message : 'Unknown error'
+      }`,
+    );
   }
 };
 
 /** Creating an article*/
 export async function createArticle(article: ArticleInput) {
-  console.log('ENTERED SECTION');
   const { error } = await supabase.from('articles').insert(article);
 
-  console.log('ERROR SECTION');
   if (error) {
     console.error(`Error creating article: ${error.message}`);
-    return;
+    // Rethrowing error for the UI
+    throw new Error(`Error creating article: ${error.message}`);
   }
-
-  console.log('LAST SECTION SECTION');
-  return redirect('/');
 }
 
 /** Fetching all articles*/
@@ -74,13 +80,17 @@ export async function fetchAllArticles() {
       .select('*');
 
     if (articleError) {
-      console.error(`Error fetching articles: ${articleError.message}`);
-      return;
+      console.error('Supabase fetchAllArticles error:', articleError.message);
+      // Re-throw an error to be called by the loader function when using it.
+      throw new Error(`Failed to fetch articles: ${articleError.message}`);
     }
 
+    // return data on success.
     return articleData;
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error('Unexpected error in fetchAllArticles:', error);
+    //Re-throw
+    throw error;
   }
 }
 
@@ -90,7 +100,8 @@ export async function fetchArticleBySlug(slug: string) {
     const { data: articleData, error: articleError } = await supabase
       .from('articles')
       .select('*')
-      .eq('slug', slug);
+      .eq('slug', slug)
+      .single();
 
     if (articleError) {
       console.error(
@@ -106,8 +117,9 @@ export async function fetchArticleBySlug(slug: string) {
     }
 
     return articleData;
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error('Unexpected error in fetchArticleBySlug:', error);
+    throw error;
   }
 }
 
@@ -117,7 +129,8 @@ export async function fetchArticleById(id: number) {
     const { data: articleData, error: articleError } = await supabase
       .from('articles')
       .select('*')
-      .eq('id', id);
+      .eq('id', id)
+      .single();
 
     if (articleError) {
       console.error(
@@ -132,6 +145,35 @@ export async function fetchArticleById(id: number) {
 
     return articleData;
   } catch (e) {
-    console.error(e);
+    console.error('Unexpected error in fetchArticleById:', e);
+    throw e;
+  }
+}
+
+export async function updateArticleById(
+  id,
+  title,
+  description,
+  tag,
+  content,
+): Promise<void> {
+  try {
+    const { error: updateError } = await supabase
+      .from('articles')
+      .update({
+        title: title,
+        description: description,
+        tag: tag,
+        content: content,
+      })
+      .eq('id', id);
+
+    if (updateError) {
+      console.error(`Error updating article by id: ${updateError.message}`);
+      throw new Error(`Error updating article by id: ${updateError.message}`);
+    }
+  } catch (error: any) {
+    console.error('Unexpected Error in updateArticleById: ', error);
+    throw error;
   }
 }
