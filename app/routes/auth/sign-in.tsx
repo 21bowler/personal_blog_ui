@@ -3,8 +3,10 @@ import type { Route } from '../../../.react-router/types/app/routes/auth/+types/
 import {
   signInUser,
   type SignInCredentials,
+  getProfileUser,
 } from '../../../services/auth-service';
 import { redirect, useActionData, useNavigation } from 'react-router';
+import { toast } from 'sonner';
 
 export const clientAction = async ({ request }: Route.ClientActionArgs) => {
   const formData = await request.formData();
@@ -24,8 +26,17 @@ export const clientAction = async ({ request }: Route.ClientActionArgs) => {
     const { user, session } = await signInUser(credentials);
 
     if (user && session) {
-      // IMPORTANT (NOTE TO FUTURE SAM): session is stored in localStorage by Supabase client,
-      return redirect('/');
+      const profile = await getProfileUser(user.id);
+
+      // user role check
+      if (profile && profile.role === 'admin') {
+        toast.success('Signed in as Admin!');
+        return redirect('/admin/all-articles');
+      } else {
+        // IMPORTANT (NOTE TO FUTURE SAM): session is stored in localStorage by Supabase client,
+        toast.success('Signed in successfully!');
+        return redirect('/');
+      }
     } else {
       return {
         error:
