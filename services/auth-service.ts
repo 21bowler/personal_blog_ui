@@ -78,6 +78,26 @@ export const getCurrentUser = async (): Promise<User | null> => {
   }
 };
 
+// fetching from the profile table
+export const getProfileUser = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', userId)
+    .single();
+
+  if (!data) {
+    throw new Error('No data Found!');
+  }
+
+  if (error) {
+    console.error('Error fetching user profile:', error.message);
+    throw error;
+  }
+
+  return data;
+};
+
 // Get Current Session
 export const getCurrentSession = async (): Promise<Session | null> => {
   const {
