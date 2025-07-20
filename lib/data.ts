@@ -1,8 +1,23 @@
 export const navLinks = [
   { name: 'Home', link: '/' },
-  { name: 'Blog', link: '/blog' },
-  { name: 'About', link: '/about' },
+  { name: 'Blog', link: '/blogs' },
+  { name: 'About', link: '/#about' },
   { name: 'Contact', link: '/contact' },
+];
+
+export const adminLinks = [
+  {
+    name: 'Dashboard',
+    link: '/admin/dashboard',
+  },
+  {
+    name: 'All Articles',
+    link: '/admin/all-articles',
+  },
+  {
+    name: 'Create Article',
+    link: '/admin/create-article',
+  },
 ];
 
 export const articleResources = [
