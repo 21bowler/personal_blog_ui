@@ -2,6 +2,7 @@ import { redirect, useActionData, useNavigation } from 'react-router';
 import AuthForm from '../../../components/AuthForm';
 import { signUp, type SignUpCredentials } from '../../../services/auth-service';
 import type { Route } from './+types/sign-up';
+import { toast } from 'sonner';
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
@@ -23,6 +24,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 
     if (user) {
       // Needs a toaster here for signing up
+      toast.success('Signed up successfully!');
       return redirect('/');
     } else {
       return {
