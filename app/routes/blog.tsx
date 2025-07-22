@@ -47,15 +47,24 @@ const Blog = ({ loaderData }: Route.ComponentProps) => {
         {/*Blog cards below*/}
         <div className="articles-grid mb-10 container">
           {currentArticles.map(
-            ({ title, description, tag, date, author, image_url }) => (
+            ({
+              title,
+              description,
+              tag,
+              author,
+              image_url,
+              created_at,
+              slug,
+            }) => (
               <ArticleCard
                 key={title}
                 title={title}
                 description={description}
                 imgUrl={image_url}
                 tag={tag}
-                date={date}
+                date={created_at}
                 author={author}
+                slug={slug}
               />
             ),
           )}
