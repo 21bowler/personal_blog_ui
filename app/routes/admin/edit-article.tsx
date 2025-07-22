@@ -21,6 +21,7 @@ export const clientAction = async ({
 }: Route.ClientActionArgs) => {
   try {
     const articleId = parseInt(params.id);
+    const formData = await request.formData();
     const title = formData.get('title') as string;
     const description = formData.get('description') as string;
     const tag = formData.get('tag') as string;
@@ -93,6 +94,7 @@ const EditArticle = ({ loaderData }: Route.ComponentProps) => {
     setFormContent(content);
   };
 
+  // @ts-ignore
   return (
     <section className="container">
       <h2 className="text-center my-2.5 text-2xl font-semibold tracking-wide">
@@ -166,11 +168,7 @@ const EditArticle = ({ loaderData }: Route.ComponentProps) => {
         {/* Content Editor */}
         <div>
           <label htmlFor="content">Content</label>
-          <ArticleEditor
-            id="content"
-            content={formContent}
-            onChange={handleContentChange}
-          />
+          <ArticleEditor content={formContent} onChange={handleContentChange} />
         </div>
         <div className="flex gap-4">
           {/* Submit button */}
