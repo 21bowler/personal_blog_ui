@@ -92,7 +92,7 @@ export const getProfileUser = async (userId: string) => {
 
   if (error) {
     console.error('Error fetching user profile:', error.message);
-    throw error;
+    throw new Error('Error fetching user profile');
   }
 
   return data;
@@ -111,6 +111,23 @@ export const getCurrentSession = async (): Promise<Session | null> => {
   }
 
   return session;
+};
+
+export const signInWithGoogle = async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin,
+    },
+  });
+
+  if (error) {
+    console.error('Error signing in with Google', error.message);
+    throw new Error('Error signing in with Google');
+  }
+
+  // data containing user info - session
+  return data;
 };
 
 // Sign Out the Current User
