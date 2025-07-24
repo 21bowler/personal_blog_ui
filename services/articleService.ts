@@ -4,7 +4,7 @@ interface ArticleInput {
   title: string;
   description: string;
   tag: string;
-  featuredImage: File;
+  image_url: string | null;
   content: string;
   author: string;
   slug: string;
@@ -151,11 +151,11 @@ export async function fetchArticleById(id: number) {
 }
 
 export async function updateArticleById(
-  id,
-  title,
-  description,
-  tag,
-  content,
+  id: number,
+  title: string,
+  description: string,
+  tag: string,
+  content: string,
 ): Promise<void> {
   try {
     const { error: updateError } = await supabase
