@@ -98,7 +98,7 @@ const Header = () => {
                   to={link}
                   key={name}
                   className={({ isActive }) =>
-                    `block px-3 py-2 rounded-md text-base ${
+                    `block px-3 py-2 rounded-md text-sm ${
                       isActive
                         ? 'font-medium bg-gray-100 text-gray-900'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
