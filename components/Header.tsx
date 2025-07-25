@@ -90,7 +90,10 @@ const Header = () => {
 
       {/*  Mobile Menu */}
       {isMenuOpen && (
-        <div className="absolute bg-white shadow-lg top-16 right-20 rounded-b-lg w-64 p-4 z-50 md:hidden">
+        <div
+          ref={menuRef}
+          className="absolute bg-white shadow-lg top-12 right-4 rounded-b-lg w-64 p-4 z-50 md:hidden"
+        >
           <nav className="space-y-1 px-2 pb-3 pt-2">
             <div className="flex flex-col items-center gap-4">
               {navLinks.map(({ name, link }) => (
