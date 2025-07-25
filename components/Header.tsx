@@ -7,9 +7,26 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [navbar, setNavbar] = useState(false);
 
-  const toggleMenuOpen = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
+      setLoadingSession(false); // Session check complete
+
+      // 3. Listen for future auth state changes
+      subscription = supabase.auth.onAuthStateChange(
+        (_event, currentSession) => {
+          // console.log('Auth state changed (Browser):', _event, currentSession);
+          setUser(currentSession?.user || null);
+        },
+      ).data.subscription;
+    };
+
+    initAuth();
+
+    // clean-up function for unsubscribing from auth changes
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
+  }, []);
 
   //TODO1: add useCallback for Optimization
   const changeBackground = useCallback(() => {
