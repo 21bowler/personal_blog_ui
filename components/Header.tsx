@@ -110,6 +110,14 @@ const Header = () => {
                 </NavLink>
               ))}
             </div>
+            {/* Show user info and auth buttons at the top of mobile menu when logged in */}
+            {user && (
+              <AuthButton
+                user={user}
+                variant="mobile"
+                onAction={() => setIsMenuOpen(false)}
+              />
+            )}
           </nav>
         </div>
       )}
