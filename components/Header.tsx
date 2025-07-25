@@ -6,6 +6,61 @@ import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [navbar, setNavbar] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [loadingSession, setLoadingSession] = useState(true);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // This closes menu when clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  // This useEffect handles the initial session check and user fetch
+  useEffect(() => {
+    let subscription: Subscription | null = null; //initially be null
+
+    const initAuth = async () => {
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+
+      if (sessionError) {
+        console.error('Error getting initial session:', sessionError);
+      }
+
+      // console.log('Initial session check result (Browser):', session);
+
+      // 2. Based on the session, get the user.
+      if (session) {
+        const {
+          data: { user: currentUser },
+          error: userError,
+        } = await supabase.auth.getUser();
+        if (userError) {
+          console.error(
+            'Error getting user from session (Browser):',
+            userError,
+          );
+          setUser(null); // Clear user if there's an error getting user despite session
+        } else {
+          setUser(currentUser);
+        }
+      } else {
+        setUser(null);
+      }
 
       setLoadingSession(false); // Session check complete
 
