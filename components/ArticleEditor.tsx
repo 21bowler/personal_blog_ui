@@ -1,9 +1,4 @@
-import {
-  useEditor,
-  EditorContent,
-  FloatingMenu,
-  BubbleMenu,
-} from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
 import { MenuBarTap } from './MenuBarTap';
 import StarterKit from '@tiptap/starter-kit';
 import { TextAlign } from '@tiptap/extension-text-align';
@@ -37,8 +32,6 @@ const ArticleEditor = ({ content, onChange }) => {
     <>
       <MenuBarTap editor={editor} />
       <EditorContent editor={editor} />
-      {/*<FloatingMenu editor={editor}>This is the floating menu</FloatingMenu>*/}
-      {/*<BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>*/}
     </>
   );
 };

@@ -65,7 +65,12 @@ export const MenuBarTap = ({ editor }: { editor: Editor | null }) => {
   return (
     <div className="button-group rounded-md p-1 mb-1 bg-slate-50 space-x-3">
       {Options.map((option, idx) => (
-        <button key={idx} onClick={option.onClick} className={option.pressed}>
+        <button
+          key={idx}
+          onClick={option.onClick}
+          type="button"
+          className={option.pressed}
+        >
           {option.icons}
         </button>
       ))}

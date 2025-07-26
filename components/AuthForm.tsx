@@ -18,10 +18,9 @@ const AuthForm = ({
   toggleLink,
   actionData,
 }: FormProps) => {
-  console.log('Checking actionData: ', actionData);
   return (
-    <section className="container h-full flex items-center justify-center">
-      <div className="border-2 h-full flex flex-col sm:w-[400px]">
+    <section className="container">
+      <div className="flex h-full flex-col justify-center w-full mx-auto sm:w-[400px]">
         <div className="mb-10">
           <h1 className="mt-8 mb-2 text-2xl lg:text-3xl font-semibold">
             Get started
@@ -35,8 +34,8 @@ const AuthForm = ({
             <div className="flex flex-col gap-4">
               <div className="">
                 {actionData?.error && (
-                  <p className="text-xs flex items-center gap-2 px-4 py-2 rounded-md text-red-800 opacity-75  border border-red-100 bg-red-200">
-                    <ExclamationTriangleIcon className="size-4" />{' '}
+                  <p className="bg-red-200/50 text-sm text-red-400 border flex gap-2 items-center border-red-100 rounded-md my-2 p-2">
+                    <ExclamationTriangleIcon className="size-4" />
                     {actionData.error}
                   </p>
                 )}
@@ -45,7 +44,7 @@ const AuthForm = ({
               <div>
                 <button
                   type="button"
-                  className="px-4 py-2 bg-gray-200 font-medium text-gray-900 text-sm rounded-md w-full"
+                  className="px-4 py-2 bg-gray-200 cursor-pointer font-medium hover:bg-gray-300 duration-300 ease-in transition-colors text-gray-900 text-sm rounded-md w-full"
                 >
                   Continue with Google
                 </button>

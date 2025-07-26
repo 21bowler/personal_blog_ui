@@ -1,0 +1,7 @@
+1. Add comments functionality
+2. Enable RLS for article table for users to only read and insert
+3. Implement Home page editors pick
+4. Design a user profile page.
+5. Create a unique error page.
+6. Add SEO for the route pages.
+7.

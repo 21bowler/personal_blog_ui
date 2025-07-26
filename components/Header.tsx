@@ -3,7 +3,7 @@ import { navLinks } from '../lib/data';
 import { Link, NavLink } from 'react-router';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import AuthButton from './AuthButton';
-import { supabase } from '../app/supabase-client';
+import { supabase } from '~/supabase-client';
 import { type Subscription, type User } from '@supabase/supabase-js';
 
 const Header = () => {
@@ -13,7 +13,7 @@ const Header = () => {
   const [loadingSession, setLoadingSession] = useState(true);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // This closes menu when clicked outside
+  // This closes a menu when clicked outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -121,8 +121,8 @@ const Header = () => {
 
       {/* Desktop Menu*/}
       <div className="hidden md:block">
-        <nav>
-          <div className="flex gap-4">
+        <nav className="flex gap-2">
+          <div className="flex items-center gap-4">
             {navLinks.map(({ name, link }) => (
               <NavLink
                 to={link}
@@ -135,12 +135,17 @@ const Header = () => {
               </NavLink>
             ))}
           </div>
+          {/* Render user data */}
+          {user && <AuthButton user={user} variant="desktop" />}
+          {/*show sign in when there is no user!*/}
+          {!user && <AuthButton user={user} variant="desktop" />}
         </nav>
       </div>
 
       {/*  Mobile Navigation */}
       <div className="md:hidden flex items-center gap-2">
         {!user && <AuthButton user={user} variant="mobile" />}
+
         <button
           type="button"
           className="inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"

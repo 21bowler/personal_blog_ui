@@ -4,12 +4,13 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Loader } from 'lucide-react';
+import type { Route } from './+types/profile';
 
 export async function clientLoader() {
   const session = await getCurrentSession();
 
   if (!session) {
-    toast.error('You are not logged in');
+    toast.error('You are not logged in.');
     return redirect('/auth/sign-in');
   }
 

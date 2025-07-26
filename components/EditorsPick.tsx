@@ -13,9 +13,11 @@ const EditorsPick = () => {
             <div className="w-full h-96 rounded-lg bg-gray-400 animate-pulse sm:w-100" />
           </div>
           <div className="editors-pick-content">
-            <span>Javascript</span>
-            <h4>Minimalism Isn't Dead: Its Just Smarter.</h4>
-            <p>
+            <span className="text-burnham-500 text-sm">Javascript</span>
+            <h4 className="font-semibold text-lg mb-4">
+              Minimalism Isn't Dead: Its Just Smarter.
+            </h4>
+            <p className="text-sm sm:text-base text-gray-600">
               In this post, I break down how sharing your journey online
               accelerates learning, builds accountability, and connects you with
               a supportive dev community

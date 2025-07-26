@@ -10,7 +10,17 @@ import CallToAction from './CTA';
 import Footer from './Footer';
 import AuthorMeta from './AuthorMeta';
 
-const BlogDetails = () => {
+const BlogDetails = ({
+  title,
+  date,
+  imgUrl,
+  author,
+  tag,
+  description,
+  content,
+  articleId,
+  comments,
+}) => {
   return (
     <section className="relative container">
       {/*  Container */}
@@ -18,11 +28,10 @@ const BlogDetails = () => {
         {/* Header details meta data */}
         <div>
           <h2 className="font-semibold text-center text-3xl sm:text-5xl">
-            The Future of User Centered Design
+            {title}
           </h2>
           <p className="text-gray-600 text-sm text-center sm:text-lg">
-            Exploring how empathy and usability are shaping the next generation
-            of design systems.
+            {description}
           </p>
 
           {/* Article Meta-Data */}
@@ -33,51 +42,7 @@ const BlogDetails = () => {
 
           {/*  article message */}
           <div className="article-details">
-            <h3 className="">Introduction</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Nisi eget massa a ornare
-              massa mauris sapien. Vitae ipsum varius massa a phasellus tellus.
-              Nulla gravida sit et turpis. Massa pretium urna ultrices consequat
-              dui et venenatis bibendum id. At aenean ullamcorper viverra diam
-              vivamus eget eget urna non. Amet et arcu tellus fermentum amet.
-              Lectus consequat nisl dui integer blandit.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Nisi eget massa a ornare
-              massa mauris sapien. Vitae ipsum varius massa a phasellus tellus.
-              Nulla gravida sit et turpis. Massa pretium urna ultrices consequat
-              dui et venenatis bibendum id. At aenean ullamcorper viverra diam
-              vivamus eget eget urna non. Amet et arcu tellus fermentum amet.
-              Lectus consequat nisl dui integer blandit.
-            </p>
-
-            <h4>1. Increased Efficiency and Productivity.</h4>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Nisi eget massa a ornare
-              massa mauris sapien. Vitae ipsum varius massa a phasellus tellus.
-              Nulla gravida sit et turpis. Massa pretium urna ultrices consequat
-              dui et venenatis bibendum id. At aenean ullamcorper viverra diam
-              vivamus eget eget urna non. Amet et arcu tellus fermentum amet.
-              Lectus consequat nisl dui integer blandit.
-            </p>
-
-            <h4>2. Better User Experience.</h4>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Nisi eget massa a ornare
-              massa mauris sapien. Vitae ipsum varius massa a phasellus tellus.
-              Nulla gravida sit et turpis. Massa pretium urna ultrices consequat
-              dui et venenatis bibendum id. At aenean ullamcorper viverra diam
-            </p>
-
-            <h4>3. Enhanced Data Analysis</h4>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Nisi eget massa a ornare
-              massa mauris sapien. Vitae ipsum varius massa a phasellus tellus.
-              Nulla gravida sit et turpis. Massa pretium urna ultrices consequat
-              dui et venenatis bibendum id. At aenean ullamcorper viverra diam
-              vivamus eget eget urna non. Amet et arcu tellus fermentum amet.
-              Lectus consequat nisl dui integer blandit.
-            </p>
+            <div dangerouslySetInnerHTML={{ __html: content }} />
           </div>
 
           {/* Latest Article Cards*/}
@@ -93,24 +58,24 @@ const BlogDetails = () => {
             {/*  Article Cards */}
             {/* Should be  */}
             <div className="flex flex-col gap-4 sm:flex-row">
-              <ArticleCard
-                title="Improved"
-                date="2025-04-13"
-                description="Leaving it to the Pros"
-                author="Jackie Chan"
-              />
-              <ArticleCard
-                title="Updated"
-                date="2025-06-10"
-                description="It was updated way before last night"
-                author="Bruce Lee"
-              />
-              <ArticleCard
-                title="Updated"
-                date="2025-06-10"
-                description="It was updated way before last night"
-                author="Bruce Lee"
-              />
+              {/*<ArticleCard*/}
+              {/*  title="Improved"*/}
+              {/*  date="2025-04-13"*/}
+              {/*  description="Leaving it to the Pros"*/}
+              {/*  author="Jackie Chan"*/}
+              {/*/>*/}
+              {/*<ArticleCard*/}
+              {/*  title="Updated"*/}
+              {/*  date="2025-06-10"*/}
+              {/*  description="It was updated way before last night"*/}
+              {/*  author="Bruce Lee"*/}
+              {/*/>*/}
+              {/*<ArticleCard*/}
+              {/*  title="Updated"*/}
+              {/*  date="2025-06-10"*/}
+              {/*  description="It was updated way before last night"*/}
+              {/*  author="Bruce Lee"*/}
+              {/*/>*/}
             </div>
           </div>
         </div>

@@ -6,11 +6,11 @@ export default function ActionButton() {
   return (
     <Link
       to="/"
-      className="flex text-sm items-center gap-4 py-2 bg-[#00561D] text-white px-4 rounded-full transition-all hover:shadow-lg hover:bg-[#007A2D]"
+      className="flex text-xs items-center gap-4 py-2 bg-burnham-800 text-white px-4 rounded-full transition-all hover:shadow-lg hover:bg-[#007A2D]"
     >
       Read more
-      <span className="p-[8px] rounded-full bg-white">
-        <ArrowRightIcon className="size-4 stroke-black rounded-full" />
+      <span className="p-2 rounded-full bg-white">
+        <ArrowRightIcon className="size-3 stroke-black rounded-full" />
       </span>
     </Link>
   );

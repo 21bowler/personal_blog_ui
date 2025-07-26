@@ -91,11 +91,26 @@ export const getProfileUser = async (userId: string) => {
   }
 
   if (error) {
-    console.error('Error fetching user profile:', error.message);
+    console.error('Error fetching user profile:', error);
     throw new Error('Error fetching user profile');
   }
 
   return data;
+};
+
+export const fetchProfile = async (userId: string) => {
+  const { data: profile, error } = await supabase
+    .from('profiles')
+    .select('username, avatar_url, created_at')
+    .eq('id', userId)
+    .single();
+
+  if (error) {
+    console.error('Error fetching profile: ', error.message);
+    throw new Error('Error fetching profile.');
+  }
+
+  return profile;
 };
 
 // Get Current Session

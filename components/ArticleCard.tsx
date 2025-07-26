@@ -1,4 +1,6 @@
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid';
+import { formatDate } from '../lib/utility';
+import { Link } from 'react-router';
 
 interface ArticleResourceProps {
   title: string;
@@ -7,6 +9,7 @@ interface ArticleResourceProps {
   description: string;
   imgUrl: string;
   author: string;
+  slug: string;
 }
 
 const ArticleCard = ({
@@ -16,6 +19,7 @@ const ArticleCard = ({
   description,
   imgUrl,
   author,
+  slug,
 }: ArticleResourceProps) => {
   return (
     <article className="container article-card">
@@ -31,16 +35,18 @@ const ArticleCard = ({
         <div>
           <span className="tag">{tag}</span>
         </div>
-        <div className="card-title">
-          <h3>{title}</h3>
-          <ArrowUpRightIcon className="w-6 h-6" />
-        </div>
-        <p className="article-date">{date}</p>
-        <p className="article-description">{description}</p>
-        <div className="author">
-          <div className="avatar" />
-          <span>{author}</span>
-        </div>
+        <Link to={`/article/${slug}`} className="group">
+          <div className="card-title">
+            <h3>{title}</h3>
+            <ArrowUpRightIcon className="w-6 h-6" />
+          </div>
+          <p className="article-date">{formatDate(date)}</p>
+          <p className="article-description">{description}</p>
+          <div className="author">
+            <div className="avatar" />
+            <span>{author}</span>
+          </div>
+        </Link>
       </div>
     </article>
   );

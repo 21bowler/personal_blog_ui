@@ -9,9 +9,9 @@ const CallToAction = () => {
           <input
             type="email"
             placeholder="Your email"
-            className="bg-white text-black outline-none placeholder:text-gray-400 py-2 pl-2 pr-8 rounded-full"
+            className="bg-white text-sm text-black outline-none placeholder:text-gray-400 w-full py-2 px-4 rounded-full"
           />
-          <button className="absolute text-sm left-48 top-1 bg-[#0A190F]/90 rounded-full px-4 py-1.5 cursor-pointer transition-all hover:bg-[#0A190F]">
+          <button className="absolute text-xs right-2 top-1 bg-[#0A190F]/90 rounded-full px-4 py-1.5 cursor-pointer transition-all hover:bg-[#0A190F]">
             Send
           </button>
         </div>
