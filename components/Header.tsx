@@ -1,7 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { navLinks } from '../lib/data';
 import { Link, NavLink } from 'react-router';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
+import AuthButton from './AuthButton';
+import { supabase } from '../app/supabase-client';
+import { type Subscription, type User } from '@supabase/supabase-js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -100,8 +103,16 @@ const Header = () => {
     };
   }, []);
 
+  const toggleMenuOpen = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <header className={`container ${navbar ? 'navbar active' : 'navbar'}`}>
+    <header
+      className={`container border flex justify-between items-center border-green-700 ${
+        navbar ? 'navbar active' : 'navbar'
+      }`}
+    >
       <div>
         <Link to="/">
           <h1 className="font-bold text-2xl">Devish</h1>
@@ -128,7 +139,8 @@ const Header = () => {
       </div>
 
       {/*  Mobile Navigation */}
-      <div className="md:hidden">
+      <div className="md:hidden flex items-center gap-2">
+        {!user && <AuthButton user={user} variant="mobile" />}
         <button
           type="button"
           className="inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"

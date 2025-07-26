@@ -3,7 +3,6 @@ import { redirect, Form } from 'react-router';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import type { Route } from './+types/profile';
 import { Loader } from 'lucide-react';
 
 export async function clientLoader() {

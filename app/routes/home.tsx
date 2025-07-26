@@ -1,6 +1,7 @@
 import type { Route } from './+types/home';
-import Header from '../../components/Header';
 import HeroSection from 'components/HeroSection';
+import EditorsPick from '../../components/EditorsPick';
+import CallToAction from '../../components/CTA';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -12,8 +13,9 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   return (
     <>
-      <Header />
       <HeroSection />
+      <EditorsPick />
+      <CallToAction />
     </>
   );
 }

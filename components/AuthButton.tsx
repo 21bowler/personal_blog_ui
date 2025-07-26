@@ -47,7 +47,7 @@ export const AuthButton = ({ user, variant, onAction }: AuthButtonsProps) => {
     return (
       <Link
         to="/auth/sign-in"
-        className="text-sm text-white bg-aquamarine-700 rounded-md px-2.5 py-1 cursor-pointer hover:bg-aquamarine-800"
+        className="text-sm text-white bg-burnham-700 rounded-md px-2.5 py-1 cursor-pointer hover:bg-burnham-800"
         onClick={onAction}
       >
         Sign In

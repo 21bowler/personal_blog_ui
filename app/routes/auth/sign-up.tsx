@@ -23,7 +23,6 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     const { user } = await signUp(credentials);
 
     if (user) {
-      // Needs a toaster here for signing up
       toast.success('Signed up successfully!');
       return redirect('/');
     } else {

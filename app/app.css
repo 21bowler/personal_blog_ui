@@ -3,6 +3,21 @@
 @theme {
     --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    /*BG Colors*/
+    --color-background: #f1faf4;
+    /*Colors*/
+    --color-burnham-50: #ebfef6;
+    --color-burnham-100: #cffce8;
+    --color-burnham-200: #a3f7d5;
+    --color-burnham-300: #68edc1;
+    --color-burnham-400: #2cdba6;
+    --color-burnham-500: #08c190;
+    --color-burnham-600: #009d76;
+    --color-burnham-700: #007e61;
+    --color-burnham-800: #02634e;
+    --color-burnham-900: #035142;
+    --color-burnham-950: #002e26;
 }
 
 @layer components {
@@ -102,5 +117,5 @@
 }
 
 html, body {
-    @apply bg-[#f1faf4] scroll-smooth;
+    @apply bg-background scroll-smooth;
 }
