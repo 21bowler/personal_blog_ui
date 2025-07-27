@@ -4,7 +4,18 @@ import StarterKit from '@tiptap/starter-kit';
 import { TextAlign } from '@tiptap/extension-text-align';
 
 const extensions = [
-  StarterKit,
+  StarterKit.configure({
+    bulletList: {
+      HTMLAttributes: {
+        class: 'list-disc ml-3',
+      },
+    },
+    orderedList: {
+      HTMLAttributes: {
+        class: 'list-decimal ml-3',
+      },
+    },
+  }),
   TextAlign.configure({
     types: ['heading', 'paragraph'],
   }),
