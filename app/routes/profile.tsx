@@ -29,6 +29,7 @@ export async function clientLoader() {
     avatarUrl: profile.avatar_url,
     username: profile.username,
     joinedAt: profile.created_at,
+    provider: session.user.app_metadata?.provider,
   };
 }
 
@@ -42,12 +43,15 @@ export function HydrateFallback() {
 
 const Profile = ({ loaderData }: Route.ComponentProps) => {
   const [showPassword, setShowPassword] = useState(false);
-  const { username, avatarUrl, joinedAt, email } = loaderData;
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { username, avatarUrl, joinedAt, email, provider } = loaderData;
+
+  const isEmailProvider = provider === 'email';
 
   return (
-    <section className="container h-full flex flex-col justify-center">
+    <section className="container min-h-[calc(100vh-200px)] flex flex-col justify-center">
       <h1 className="text-xl text-center mb-3 md:text-2xl">
-        <span className="text-aquamarine-800">User</span> Profile
+        <span className=" font-semibold text-burnham-800">User</span> Profile
       </h1>
       <div className="flex flex-col items-center justify-center">
         {/* Avatar Image */}
@@ -72,7 +76,7 @@ const Profile = ({ loaderData }: Route.ComponentProps) => {
         </div>
         <div className="text-center">
           <p className="text-lg font-semibold">{username}</p>
-          <span className="font-normal text-xs text-aquamarine-800">
+          <span className="font-normal text-xs text-burnham-800">
             Joined in {joinedAt.split('-')[0]}
           </span>
         </div>
@@ -96,42 +100,88 @@ const Profile = ({ loaderData }: Route.ComponentProps) => {
               />
             </div>
 
-            {/* password wrapper */}
-            <div className="">
-              <label htmlFor="password" className="block text-sm mb-1">
-                Password
-              </label>
+            {isEmailProvider && (
+              <>
+                {/* password wrapper */}
+                <div className="">
+                  <label htmlFor="password" className="block text-sm mb-1">
+                    Password
+                  </label>
 
-              <input
-                type="password"
-                name="password"
-                id="password"
-                className="border border-gray-300 text-sm text-gray-700 rounded-md w-full px-4 py-2 outline-none"
-                placeholder="Enter password"
-              />
-            </div>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      name="password"
+                      id="password"
+                      className="border border-gray-300 text-sm text-gray-700 rounded-md w-full px-4 py-2 outline-none"
+                      placeholder="Enter password"
+                    />
+                    <div className="absolute inset-y-0 right-0 pl-3 pr-1 flex space-x-1 items-center">
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="relative justify-center cursor-pointer border border-gray-400 inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 text-xs px-2.5 py-1 h-[26px]"
+                      >
+                        {showPassword ? (
+                          <EyeSlashIcon className="size-4" />
+                        ) : (
+                          <EyeIcon className="size-4" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-            {/* confirm-password wrapper */}
-            <div className="">
-              <label htmlFor="confirmPassword" className="block text-sm mb-1">
-                Confirm Password
-              </label>
+                {/* confirm-password wrapper */}
+                <div className="">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="block text-sm mb-1"
+                  >
+                    Confirm Password
+                  </label>
 
-              <input
-                type="password"
-                name="confirmPassword"
-                id="confirmPassword"
-                className="border border-gray-300 text-sm text-gray-700 rounded-md w-full px-4 py-2 outline-none"
-                placeholder="Confirm password"
-              />
-            </div>
+                  <div className="relative">
+                    <input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      name="confirmPassword"
+                      id="confirmPassword"
+                      className="border border-gray-300 text-sm text-gray-700 rounded-md w-full px-4 py-2 outline-none"
+                      placeholder="Confirm password"
+                    />
+                    <div className="absolute inset-y-0 right-0 pl-3 pr-1 flex space-x-1 items-center">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                        className="relative justify-center cursor-pointer border border-gray-400 inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 text-xs px-2.5 py-1 h-[26px]"
+                      >
+                        {showConfirmPassword ? (
+                          <EyeSlashIcon className="size-4" />
+                        ) : (
+                          <EyeIcon className="size-4" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-            <button
-              type="button"
-              className="bg-aquamarine-500 cursor-pointer text-white font-regular text-sm px-4 py-2 rounded-md outline-none hover:bg-aquamarine-600 transition-all duration-200 ease-in-out"
-            >
-              Save Changes
-            </button>
+                <button
+                  type="button"
+                  className="bg-burnham-500 cursor-pointer text-white font-regular text-sm px-4 py-2 rounded-md outline-none hover:bg-burnham-600 transition-all duration-200 ease-in-out"
+                >
+                  Save Changes
+                </button>
+              </>
+            )}
+
+            {!isEmailProvider && (
+              <p className="text-sm font-regular text-gray-800 text-center">
+                Password Management is handled by{' '}
+                <span className="font-medium">Google Authentication.</span>
+              </p>
+            )}
           </div>
         </Form>
       </div>
