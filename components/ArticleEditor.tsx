@@ -22,7 +22,12 @@ const extensions = [
 ];
 // const content = '<p>Hello World!</p>';
 
-const ArticleEditor = ({ content, onChange }) => {
+interface ArticleEditorProps {
+  content: string;
+  onChange: (html: string) => void;
+}
+
+const ArticleEditor = ({ content, onChange }: ArticleEditorProps) => {
   const editor = useEditor({
     extensions,
     content,
