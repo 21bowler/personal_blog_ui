@@ -2,6 +2,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import { MenuBarTap } from './MenuBarTap';
 import StarterKit from '@tiptap/starter-kit';
 import { TextAlign } from '@tiptap/extension-text-align';
+import { Highlight } from '@tiptap/extension-highlight';
 
 const extensions = [
   StarterKit.configure({
@@ -19,8 +20,12 @@ const extensions = [
   TextAlign.configure({
     types: ['heading', 'paragraph'],
   }),
+  Highlight.configure({
+    HTMLAttributes: {
+      class: 'hover:bg-gray-100',
+    },
+  }),
 ];
-// const content = '<p>Hello World!</p>';
 
 interface ArticleEditorProps {
   content: string;
