@@ -87,7 +87,9 @@ const CreateArticle = () => {
   return (
     <section className="container">
       <div className="p-4">
-        <h2 className="text-2xl font-semibold text-center">Create Article</h2>
+        <h2 className="text-2xl font-semibold text-center">
+          <span className="text-violet-600">Create</span> Article
+        </h2>
 
         <Form
           className="max-w-xl p-6 shadow-sm mt-2 space-y-6 mx-auto bg-white rounded-lg"
@@ -104,7 +106,10 @@ const CreateArticle = () => {
 
           {/*  Title */}
           <div>
-            <label className="text-gray-700 font-medium" htmlFor="title">
+            <label
+              className="text-gray-600 text-sm sm:text-base font-medium"
+              htmlFor="title"
+            >
               Title
             </label>
             <input
@@ -118,7 +123,10 @@ const CreateArticle = () => {
 
           {/*  Description */}
           <div>
-            <label className="text-gray-700 font-medium" htmlFor="description">
+            <label
+              className="text-gray-700 text-sm sm:text-base font-medium"
+              htmlFor="description"
+            >
               Description
             </label>
             <textarea
@@ -131,20 +139,24 @@ const CreateArticle = () => {
 
           {/* Featured Image */}
           <div>
-            <label htmlFor="featuredImage">Featured Image</label>
+            <label htmlFor="featuredImage" className="text-sm sm:text-base">
+              Featured Image
+            </label>
             <input
               type="file"
               accept="image/*"
               onChange={handleFileChange}
               name="featuredImage"
               id="featuredImage"
-              className="mt-1 block text-sm shadow-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file-rounded-md file:border-0 hover:file:bg-gray-200 hover:file:text-black file:bg-black file:text-white file:rounded-md file:cursor-pointer file:transition-all file:duration-300 file:ease-in-out"
+              className="mt-1 block text-xs sm:text-sm shadow-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file-rounded-md file:border-0 hover:file:bg-gray-200 hover:file:text-black file:bg-black file:text-white file:rounded-md file:cursor-pointer file:transition-all file:duration-300 file:ease-in-out"
             />
           </div>
 
           {/* Tag*/}
           <div>
-            <label htmlFor="tag">Tag</label>
+            <label htmlFor="tag" className="text-sm sm:text-base">
+              Tag
+            </label>
             <input
               type="text"
               id="tag"
@@ -159,7 +171,9 @@ const CreateArticle = () => {
 
           {/* Content Editor */}
           <div>
-            <label htmlFor="content">Content</label>
+            <label htmlFor="content" className="my-2 text-sm sm:text-base">
+              Content
+            </label>
             <ArticleEditor content="" onChange={handleEditorChange} />
           </div>
 
