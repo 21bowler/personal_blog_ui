@@ -1,6 +1,11 @@
-import React from 'react';
-import { EyeIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { useState } from 'react';
+import {
+  EyeIcon,
+  EyeSlashIcon,
+  ExclamationTriangleIcon,
+} from '@heroicons/react/24/outline';
 import { Link, Form } from 'react-router';
+import { signInWithGoogle } from '../services/auth-service';
 
 interface FormProps {
   subtitleText: string;
@@ -18,6 +23,8 @@ const AuthForm = ({
   toggleLink,
   actionData,
 }: FormProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <section className="container">
       <div className="flex h-full flex-col justify-center w-full mx-auto sm:w-[400px]">
@@ -44,6 +51,7 @@ const AuthForm = ({
               <div>
                 <button
                   type="button"
+                  onClick={signInWithGoogle}
                   className="px-4 py-2 bg-gray-200 cursor-pointer font-medium hover:bg-gray-300 duration-300 ease-in transition-colors text-gray-900 text-sm rounded-md w-full"
                 >
                   Continue with Google
@@ -87,7 +95,7 @@ const AuthForm = ({
                 <div className="col-span-12">
                   <div className="relative">
                     <input
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       id="password"
                       placeholder="•••••••"
                       className="box-border rounded-md shadow-sm outline-none focus:ring-current focus:ring-2 border text-sm px-4 py-2 w-full"
@@ -95,9 +103,14 @@ const AuthForm = ({
                     <div className="absolute inset-y-0 right-0 pl-3 pr-1 flex space-x-1 items-center">
                       <button
                         type="button"
+                        onClick={() => setShowPassword(!showPassword)}
                         className="relative justify-center cursor-pointer border border-gray-400 inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 text-xs px-2.5 py-1 h-[26px] "
                       >
-                        <EyeIcon className="size-4" />
+                        {showPassword ? (
+                          <EyeSlashIcon className="size-4" />
+                        ) : (
+                          <EyeIcon className="size-4" />
+                        )}
                       </button>
                     </div>
                   </div>
