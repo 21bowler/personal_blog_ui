@@ -1,12 +1,23 @@
 import {
-  H1Icon,
-  H2Icon,
-  H3Icon,
-  BoldIcon,
-  ItalicIcon,
-  StrikethroughIcon,
-} from '@heroicons/react/24/solid';
-import { Editor } from '@tiptap/react';
+  Heading1,
+  Heading2,
+  Heading3,
+  Bold,
+  Italic,
+  Strikethrough,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  Undo,
+  Redo,
+  Minus,
+  List,
+  ListOrdered,
+  Link,
+  Highlighter,
+  TextQuote,
+} from 'lucide-react';
+import type { Editor } from '@tiptap/react';
 
 export const MenuBarTap = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
@@ -16,49 +27,84 @@ export const MenuBarTap = ({ editor }: { editor: Editor | null }) => {
   // icons
   const Options = [
     {
-      icons: <H1Icon className="size-4" />,
+      icons: <Heading1 className="size-4" />,
       onClick: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
       pressed: editor.isActive('heading', { level: 1 }) ? 'is-active' : '',
     },
     {
-      icons: <H2Icon className="size-4" />,
+      icons: <Heading2 className="size-4" />,
       onClick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
       pressed: editor.isActive('heading', { level: 2 }) ? 'is-active' : '',
     },
     {
-      icons: <H3Icon className="size-4" />,
+      icons: <Heading3 className="size-4" />,
       onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
       pressed: editor.isActive('heading', { level: 3 }) ? 'is-active' : '',
     },
     {
-      icons: <BoldIcon className="size-4" />,
+      icons: <Bold className="size-4" />,
       onClick: () => editor.chain().focus().toggleBold().run(),
       pressed: editor.isActive('bold') ? 'is-active' : '',
     },
     {
-      icons: <ItalicIcon className="size-4" />,
+      icons: <Italic className="size-4" />,
       onClick: () => editor.chain().focus().toggleItalic().run(),
       pressed: editor.isActive('italic') ? 'is-active' : '',
     },
     {
-      icons: <StrikethroughIcon className="size-4" />,
+      icons: <Strikethrough className="size-4" />,
       onClick: () => editor.chain().focus().toggleStrike().run(),
       pressed: editor.isActive('strike') ? 'is-active' : '',
     },
     {
-      icons: 'AL',
+      icons: <AlignLeft className="size-4" />,
       onClick: () => editor.chain().focus().setTextAlign('left').run(),
       pressed: editor.isActive({ textAlign: 'left' }) ? 'is-active' : '',
     },
     {
-      icons: 'AC',
+      icons: <AlignCenter className="size-4" />,
       onClick: () => editor.chain().focus().setTextAlign('center').run(),
       pressed: editor.isActive({ textAlign: 'center' }) ? 'is-active' : '',
     },
     {
-      icons: 'AR',
+      icons: <AlignRight className="size-4" />,
       onClick: () => editor.chain().focus().setTextAlign('right').run(),
       pressed: editor.isActive({ textAlign: 'right' }) ? 'is-active' : '',
+    },
+    {
+      icons: <List className="size-4" />,
+      onClick: () => editor.chain().focus().toggleBulletList().run(),
+      pressed: editor.isActive('bulletList') ? 'is-active' : '',
+    },
+    {
+      icons: <ListOrdered className="size-4" />,
+      onClick: () => editor.chain().focus().toggleOrderedList().run(),
+      pressed: editor.isActive('orderedList') ? 'is-active' : '',
+    },
+    {
+      icons: <Highlighter className="size-4" />,
+      onClick: () => editor.chain().focus().toggleHighlight().run(),
+      pressed: editor.isActive('highlight') ? 'is-active' : '',
+    },
+    {
+      icons: <Minus className="size-4" />,
+      onClick: () => editor.chain().focus().setHorizontalRule().run(),
+      pressed: editor.isActive('horizontalRule') ? 'is-active' : '',
+    },
+    {
+      icons: <TextQuote className="size-4" />,
+      onClick: () => editor.chain().focus().toggleBlockquote().run(),
+      pressed: editor.isActive('blockquote') ? 'is-active' : '',
+    },
+    {
+      icons: <Undo className="size-4" />,
+      onClick: () => editor.chain().focus().undo().run(),
+      pressed: editor.isActive('undo') ? 'is-active' : '',
+    },
+    {
+      icons: <Redo className="size-4" />,
+      onClick: () => editor.chain().focus().redo().run(),
+      pressed: editor.isActive('redo') ? 'is-active' : '',
     },
   ];
 
