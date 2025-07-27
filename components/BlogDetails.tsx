@@ -5,9 +5,6 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
 } from '@heroicons/react/24/outline';
-import ArticleCard from './ArticleCard';
-import CallToAction from './CTA';
-import Footer from './Footer';
 import AuthorMeta from './AuthorMeta';
 
 const BlogDetails = ({
@@ -80,10 +77,6 @@ const BlogDetails = ({
           </div>
         </div>
       </div>
-
-      {/*  Call To Action */}
-      <CallToAction />
-      <Footer />
     </section>
   );
 };
