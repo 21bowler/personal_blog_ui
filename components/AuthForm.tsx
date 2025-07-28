@@ -27,7 +27,7 @@ const AuthForm = ({
 
   return (
     <section className="container">
-      <div className="flex h-full flex-col justify-center w-full mx-auto sm:w-[400px]">
+      <div className="flex h-full min-h-[calc(100vh-200px)] flex-col justify-center w-full mx-auto sm:w-[400px]">
         <div className="mb-10">
           <h1 className="mt-8 mb-2 text-2xl lg:text-3xl font-semibold">
             Get started
