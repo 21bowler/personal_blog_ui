@@ -12,6 +12,7 @@ export default [
     route('edit-article/:id', 'routes/admin/edit-article.tsx'),
   ]),
   route('/profile', 'routes/profile.tsx'),
+  route('*', 'routes/not-found.tsx'),
 
   route('auth/sign-in', 'routes/auth/sign-in.tsx'),
   route('auth/sign-up', 'routes/auth/sign-up.tsx'),
