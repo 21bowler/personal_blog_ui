@@ -98,7 +98,7 @@ const EditArticle = ({ loaderData }: Route.ComponentProps) => {
   return (
     <section className="container">
       <h2 className="text-center my-2.5 text-2xl font-semibold tracking-wide">
-        <span className="bg-gradient-from-tl bg-gradient-to-br from-blue-200 to-bg-blue-700">
+        <span className="bg-linear-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">
           Edit
         </span>{' '}
         Article
