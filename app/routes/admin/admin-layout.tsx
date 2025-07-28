@@ -41,7 +41,7 @@ export function HydrateFallback() {
   );
 }
 
-const Dashboard = () => {
+const AdminLayout = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -129,4 +129,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminLayout;
