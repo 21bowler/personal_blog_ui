@@ -115,89 +115,99 @@ const Header = () => {
           : 'bg-transparent'
       }`}
     >
-      <div>
-        <Link to="/">
-          <h1 className="font-bold text-2xl">Devish</h1>
-        </Link>
-      </div>
+      <div className="container mx-auto flex justify-between items-center">
+        <div>
+          <Link to="/">
+            <h1 className="font-bold text-2xl">Devish</h1>
+          </Link>
+        </div>
 
-      {/* Desktop Menu*/}
-      <div className="hidden md:block">
-        <nav className="flex gap-2">
-          <div className="flex items-center gap-4">
-            {navLinks.map(({ name, link }) => (
-              <NavLink
-                to={link}
-                key={name}
-                className={({ isActive }) =>
-                  isActive ? 'font-medium underline' : 'hover:text-gray-600'
-                }
-              >
-                {name}
-              </NavLink>
-            ))}
-          </div>
-          {/* Render user data */}
-          {user && <AuthButton user={user} variant="desktop" />}
-          {/*show sign in when there is no user!*/}
-          {!user && <AuthButton user={user} variant="desktop" />}
-        </nav>
-      </div>
-
-      {/*  Mobile Navigation */}
-      <div className="md:hidden flex items-center gap-2">
-        {!user && <AuthButton user={user} variant="mobile" />}
-
-        <button
-          type="button"
-          className="inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-          onClick={toggleMenuOpen}
-          aria-expanded={isMenuOpen}
-        >
-          {isMenuOpen ? (
-            <XMarkIcon className="w-6 h-6" aria-hidden="true" />
-          ) : (
-            <Bars3Icon className="w-6 h-6" aria-hidden="true" />
-          )}
-        </button>
-      </div>
-
-      {/*  Mobile Menu */}
-      {isMenuOpen && (
-        <div
-          ref={menuRef}
-          className="absolute bg-white shadow-lg top-12 right-4 rounded-b-lg w-64 p-4 z-50 md:hidden"
-        >
-          <nav className="space-y-1 px-2 pb-3 pt-2">
-            <div className="flex flex-col items-center gap-4">
+        {/* Desktop Menu*/}
+        <div className="hidden md:block">
+          <nav className="flex gap-2">
+            <div className="flex items-center gap-4">
               {navLinks.map(({ name, link }) => (
                 <NavLink
                   to={link}
                   key={name}
                   className={({ isActive }) =>
-                    `block px-3 py-2 rounded-md text-sm ${
-                      isActive
-                        ? 'font-medium bg-gray-100 text-gray-900'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-                    }`
+                    isActive ? 'font-medium underline' : 'hover:text-gray-600'
                   }
-                  onClick={() => setIsMenuOpen(false)}
                 >
                   {name}
                 </NavLink>
               ))}
             </div>
-            {/* Show user info and auth buttons at the top of mobile menu when logged in */}
-            {user && (
-              <AuthButton
-                user={user}
-                variant="mobile"
-                onAction={() => setIsMenuOpen(false)}
-              />
-            )}
+            {/* Render user data */}
+            {user && <AuthButton user={user} variant="desktop" />}
+            {/*show sign in when there is no user!*/}
+            {!user && <AuthButton user={user} variant="desktop" />}
           </nav>
         </div>
-      )}
+
+        {/*  Mobile Navigation */}
+        <div className="md:hidden flex items-center gap-2">
+          {!user && <AuthButton user={user} variant="mobile" />}
+
+          {user && (
+            <AuthButton
+              user={user}
+              variant="desktop"
+              onAction={() => setIsMenuOpen(false)}
+            />
+          )}
+
+          <button
+            type="button"
+            className="inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+            onClick={toggleMenuOpen}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? (
+              <XMarkIcon className="w-6 h-6" aria-hidden="true" />
+            ) : (
+              <Bars3Icon className="w-6 h-6" aria-hidden="true" />
+            )}
+          </button>
+        </div>
+
+        {/*  Mobile Menu */}
+        {isMenuOpen && (
+          <div
+            ref={menuRef}
+            className="absolute bg-white shadow-lg top-14 right-4 rounded-lg w-64 p-4 z-50 md:hidden"
+          >
+            <nav className="space-y-1 px-2 pb-3 pt-2">
+              <div className="flex flex-col gap-4">
+                {navLinks.map(({ name, link }) => (
+                  <NavLink
+                    to={link}
+                    key={name}
+                    className={({ isActive }) =>
+                      `block px-3 py-2 rounded-md text-sm font-medium ${
+                        isActive
+                          ? 'font-semibold bg-gray-100/90 text-gray-900'
+                          : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                      }`
+                    }
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {name}
+                  </NavLink>
+                ))}
+              </div>
+              {/*/!* Show user info and auth buttons at the top of mobile menu when logged in *!/*/}
+              {/*{user && (*/}
+              {/*  <AuthButton*/}
+              {/*    user={user}*/}
+              {/*    variant="mobile"*/}
+              {/*    onAction={() => setIsMenuOpen(false)}*/}
+              {/*  />*/}
+              {/*)}*/}
+            </nav>
+          </div>
+        )}
+      </div>
     </header>
   );
 };
