@@ -21,14 +21,14 @@ const AdminArticles = ({ loaderData }: Route.ComponentProps) => {
         <h1 className="uppercase font-serif">All articles</h1>
         <Link
           to="/admin/create-article"
-          className="text-sm text-white px-2.5 py-1 bg-aquamarine-700 rounded-lg"
+          className="text-sm text-white px-2.5 py-1 bg-burnham-700 rounded-lg"
         >
           New Article
         </Link>
       </div>
 
       {/* All articles*/}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {loaderData.map(({ id, title, description }) => (
           <div
             key={id}
@@ -41,11 +41,14 @@ const AdminArticles = ({ loaderData }: Route.ComponentProps) => {
             <div className="flex justify-end items-center gap-4 mt-4">
               <Link
                 to={`/admin/edit-article/${id}`}
-                className="text-sm bg-blue-500 px-4 py-1 rounded-md text-white"
+                className="text-xs border border-burnham-600 text-burnham-700 px-4 py-1 rounded-md hover:bg-burnham-100 hover:border-burnham-200 transition-all duration-200 ease-out"
               >
                 Edit
               </Link>
-              <button className="text-white cursor-pointer bg-red-400 rounded-md px-2.5 py-1 text-sm hover:bg-red-500 transition-all duration-300 ease-out">
+              <button
+                type="button"
+                className="text-gray-300 cursor-pointer bg-red-400 rounded-md px-2.5 py-1 text-sm hover:bg-red-500 transition-all duration-300 ease-out"
+              >
                 Delete
               </button>
             </div>
