@@ -32,7 +32,7 @@ const BlogDetails = ({
           </p>
 
           {/* Article Meta-Data */}
-          <AuthorMeta justify="justify-center" />
+          <AuthorMeta justify="justify-center" author={author} tag={tag} />
 
           {/*Image*/}
           <div></div>
