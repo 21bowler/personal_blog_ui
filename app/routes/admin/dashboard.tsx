@@ -63,7 +63,7 @@ const Dashboard = () => {
 
   return (
     <div className="container flex flex-col md:flex-row">
-      <aside className="hidden w-[16.25rem] sticky top-[4.25rem] h-[50rem] text-white p-6 md:block">
+      <aside className="hidden sm:w-[16.25rem] sticky top-[4.25rem] h-[50rem] text-white p-6 md:block">
         <div className="flex flex-col justify-between">
           <div>
             <div className="text-xl text-gray-900 sm:text-2xl mb-10 font-semibold tracking-wide">
@@ -84,7 +84,7 @@ const Dashboard = () => {
             </nav>
           </div>
           <div className="text-sm text-gray-900 mt-10">
-            &copy; {new Date().getFullYear()} Admin Panel
+            Developed by 👨‍💻 Sam Wachira.
             {/* TODO: Logout button here*/}
           </div>
         </div>
