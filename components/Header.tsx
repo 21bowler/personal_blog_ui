@@ -88,7 +88,7 @@ const Header = () => {
 
   //TODO1: add useCallback for Optimization
   const changeBackground = useCallback(() => {
-    if (window.scrollY >= 100) {
+    if (window.scrollY >= 10) {
       setNavbar(true);
     } else {
       setNavbar(false);
