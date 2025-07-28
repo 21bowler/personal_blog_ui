@@ -109,8 +109,10 @@ const Header = () => {
 
   return (
     <header
-      className={`container border flex justify-between items-center border-green-700 ${
-        navbar ? 'navbar active' : 'navbar'
+      className={`sticky w-full top-0 z-50 transition-all transform-gpu duration-300 py-2 ${
+        navbar
+          ? 'bg-background/80 backdrop-blur-sm shadow-sm'
+          : 'bg-transparent'
       }`}
     >
       <div>
