@@ -15,8 +15,16 @@ export const adminLinks = [
     link: '/admin/all-articles',
   },
   {
+    name: 'Comments',
+    link: '/admin/comments',
+  },
+  {
     name: 'Create Article',
     link: '/admin/create-article',
+  },
+  {
+    name: 'Users',
+    link: '/admin/users',
   },
 ];
 
