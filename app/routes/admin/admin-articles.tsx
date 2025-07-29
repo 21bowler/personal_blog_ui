@@ -1,4 +1,5 @@
 import React from 'react';
+import { Plus } from 'lucide-react';
 import { Link } from 'react-router';
 import { fetchAllArticles } from '../../../services/articleService';
 import type { Route } from './+types/admin-articles';
@@ -17,12 +18,18 @@ const AdminArticles = ({ loaderData }: Route.ComponentProps) => {
   return (
     <div className={'container'}>
       {/*header*/}
-      <div className="flex justify-between items-center py-4">
-        <h1 className="uppercase font-serif">All articles</h1>
+      <div className="flex justify-between items-center py-6">
+        <div>
+          <h1 className="uppercase font-serif">Articles</h1>
+          <p className="text-muted-foreground">
+            Manage your blog articles and content
+          </p>
+        </div>
         <Link
           to="/admin/create-article"
-          className="text-sm text-white px-2.5 py-1 bg-burnham-700 rounded-lg"
+          className="text-sm flex items-center text-white px-4 py-2 bg-burnham-700 rounded-md hover:bg-burnham-800 transition-all duration-300 ease-in"
         >
+          <Plus className="size-4 mr-2" />
           New Article
         </Link>
       </div>
