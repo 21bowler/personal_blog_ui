@@ -5,6 +5,7 @@ import {
   ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline';
 import { Link, Form } from 'react-router';
+import GoogleIcon from './GoogleIcon';
 import { signInWithGoogle } from '../services/auth-service';
 
 interface FormProps {
@@ -52,8 +53,9 @@ const AuthForm = ({
                 <button
                   type="button"
                   onClick={signInWithGoogle}
-                  className="px-4 py-2 bg-gray-200 cursor-pointer font-medium hover:bg-gray-300 duration-300 ease-in transition-colors text-gray-900 text-sm rounded-md w-full"
+                  className="px-4 py-2 border border-gray-400 flex justify-center items-center gap-2 cursor-pointer font-medium hover:bg-gray-300 duration-300 ease-in transition-colors text-gray-900 text-sm rounded-md w-full"
                 >
+                  <GoogleIcon />
                   Continue with Google
                 </button>
               </div>
