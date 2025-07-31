@@ -5,12 +5,64 @@ import {
   Search,
   Trash2,
 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { getAllComments } from '../../../services/comment-service';
+import { formatIntl } from '../../../lib/utility';
 import { Link } from 'react-router';
 
+interface Comment {
+  articles: {
+    title: string;
+    slug: string;
+  };
+  content: string;
+  created_at: string;
+  id: number;
+  profiles: {
+    username: string;
+  };
+}
+
+// Create a separate action menu component to handle Speed.
+const ActionMenu = memo(
+  ({ onEdit, onDelete }: { onEdit: () => void; onDelete: () => void }) => {
+    return (
+      <div className="absolute right-18 z-50 min-w-[8rem] border border-gray-200 overflow-hidden bg-popover shaddow-md rounded-md shadow-md p-2">
+        <button
+          type="button"
+          onClick={onEdit}
+          className="flex px-2 py-1.5 items-center w-full hover:bg-gray-100 gap-1"
+        >
+          <Edit className="h-4 w-4 mr-2" />
+          Edit
+        </button>
+        <button
+          type="button"
+          onClick={onDelete}
+          className="text-destructive px-2 py-1.5 flex items-center w-full hover:bg-gray-100 gap-1"
+        >
+          <Trash2 className="h-4 w-4 mr-2" />
+          Delete
+        </button>
+      </div>
+    );
+  },
+);
+
 const AdminComments = () => {
-  const [actionDropDown, setActionDropDown] = useState<boolean>(false);
+  const [actionDropDownId, setActionDropDownId] = useState<number | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // memoize toggle handler
+  const handleDropdownToggle = useCallback((commentId: number) => {
+    setActionDropDownId((prev) => (prev === commentId ? null : commentId));
+  }, []);
+
+  //  memoized delete comment handler
+  const handleCommentDelete = useCallback((commentId: number) => {
+    console.log(`Comment with ${commentId} deleted`);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -18,14 +70,25 @@ const AdminComments = () => {
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setActionDropDown(false);
+        setActionDropDownId(null);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    if (actionDropDownId !== null) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [actionDropDownId]);
+
+  useEffect(() => {
+    getAllComments()
+      .then((allComments) => {
+        setComments(allComments);
+        console.log('Checking comments: ', allComments);
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   return (
@@ -75,60 +138,63 @@ const AdminComments = () => {
               </thead>
 
               <tbody>
-                <tr className="t-row">
-                  <td className="t-data">
-                    <div className="font-medium">Bob the Builder</div>
-                    <div className="text-sm text-muted-foreground md:hidden">
-                      06/04/2025
-                    </div>
-                  </td>
-                  <td className="hidden md:table-cell">
-                    <Link
-                      to="#"
-                      className="flex items-center gap-1 hover:underline"
-                    >
-                      Article title
-                      <ExternalLink className="size-3" />
-                    </Link>
-                  </td>
-                  <td className="t-data">
-                    <div className="line-clamp-2">Comment content</div>
-                  </td>
-                  <td className="hidden md:table-cell text-muted-foreground">
-                    02/02/2023
-                  </td>
-                  <td className="t-data relative">
-                    <button
-                      type="button"
-                      onClick={() => setActionDropDown(!actionDropDown)}
-                      className="cursor-pointer hover:bg-gray-200 rounded-md p-1.5"
-                    >
-                      <MoreHorizontal className="size-4" />
-                    </button>
-                    {/*Action buttons*/}
-                    {actionDropDown && (
-                      <div
-                        ref={dropdownRef}
-                        className="absolute right-18 z-50 min-w-[8rem] border border-gray-200 overflow-hidden bg-popover shaddow-md rounded-md shadow-md p-2"
-                      >
+                {comments.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="h-24 text-center">
+                      No comments found!
+                    </td>
+                  </tr>
+                ) : (
+                  comments.map((comment) => (
+                    <tr key={comment.id} className="t-row">
+                      <td className="t-data">
+                        <div className="font-medium">
+                          {comment.profiles.username}
+                        </div>
+                        <div className="text-xs text-muted-foreground md:hidden">
+                          {formatIntl(comment.created_at)}
+                        </div>
+                      </td>
+                      <td className="hidden md:table-cell">
+                        <Link
+                          to={`/article/${comment.articles.slug}`}
+                          className="flex text-muted-foreground items-center gap-1 hover:underline"
+                        >
+                          {comment.articles.title}
+                          <ExternalLink className="size-3" />
+                        </Link>
+                      </td>
+                      <td className="t-data">
+                        <div className="line-clamp-2">{comment.content}</div>
+                      </td>
+                      <td className="hidden md:table-cell text-xs text-muted-foreground">
+                        {formatIntl(comment.created_at)}
+                      </td>
+                      <td className="t-data relative">
                         <button
                           type="button"
-                          className="flex px-2 py-1.5 items-center w-full hover:bg-gray-100 gap-1"
+                          onClick={() =>
+                            setActionDropDownId(
+                              actionDropDownId === comment.id
+                                ? null
+                                : comment.id,
+                            )
+                          }
+                          className="cursor-pointer hover:bg-gray-200 rounded-md p-1.5"
                         >
-                          <Edit className="h-4 w-4 mr-2" />
-                          Edit
+                          <MoreHorizontal className="size-4" />
                         </button>
-                        <button
-                          type="button"
-                          className="text-destructive px-2 py-1.5 flex items-center w-full hover:bg-gray-100 gap-1"
-                        >
-                          <Trash2 className="h-4 w-4 mr-2" />
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
+                        {/*Action buttons*/}
+                        {actionDropDownId === comment.id && (
+                          <ActionMenu
+                            onEdit={() => console.log('Edit has ben clicked!!')}
+                            onDelete={() => handleCommentDelete(comment.id)}
+                          />
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
