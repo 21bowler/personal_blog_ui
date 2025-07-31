@@ -55,3 +55,15 @@ export const formatTimeAgo = (isoDateString: string): string => {
     return isoDateString; // Fallback
   }
 };
+
+export const formatIntl = (date: string): string => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
+  const formatter = Intl.DateTimeFormat('en-US', options);
+
+  return formatter.format(new Date(date));
+};
