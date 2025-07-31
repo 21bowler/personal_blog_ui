@@ -1,8 +1,75 @@
-import { FileText, Users, TrendingUp, MessageSquare } from 'lucide-react';
+import {
+  FileText,
+  Users,
+  TrendingUp,
+  MessageSquare,
+  Loader,
+} from 'lucide-react';
+import {
+  fetchLatestArticles,
+  fetchTotalArticles,
+} from '../../../services/articleService';
+import { Link } from 'react-router';
+import { useEffect, useState } from 'react';
+import { getTotalUsers } from '../../../services/auth-service';
+import { getTotalCommentsCount } from '../../../services/comment-service';
+import { formatIntl } from '../../../lib/utility';
+
+type UserStats = {
+  count: number | null;
+  profileRole: number | null;
+};
+
+type Article = {
+  author: string;
+  content: string;
+  created_at: string;
+  description: string;
+  id: number;
+  image_url: string;
+  published: boolean;
+  slug: string;
+  tag: string;
+  title: string;
+};
 
 function AdminDashboard() {
+  const [totalArticles, setTotalArticles] = useState<number | null>(null);
+  const [totalComments, setTotalComments] = useState<number | null>(null);
+  const [latestArticles, setLatestArticles] = useState<Article[]>([]);
+  const [userStats, setUserStats] = useState<UserStats>({
+    count: null,
+    profileRole: null,
+  });
+
+  fetchTotalArticles()
+    .then((total) => setTotalArticles(total))
+    .catch((err) => console.error(err));
+
+  useEffect(() => {
+    getTotalUsers()
+      .then((stats) => setUserStats(stats))
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    getTotalCommentsCount()
+      .then((total) => setTotalComments(total))
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    const getLatest = async () => {
+      const latest = await fetchLatestArticles();
+      setLatestArticles(latest);
+      console.log('latest articles: ', latest);
+    };
+
+    getLatest();
+  }, []);
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 my-6">
       <div>
         <h1 className="text-3xl tracking-tight font-bold">Dashboard</h1>
         <p className="text-muted-foreground">
@@ -18,9 +85,17 @@ function AdminDashboard() {
             <FileText className="size-4 text-muted-foreground" />
           </div>
           <div>
-            <div className="text-2xl font-bold">5</div>
+            <div className="text-2xl font-bold">
+              {totalArticles !== null ? (
+                totalArticles
+              ) : (
+                <Loader className="w-4 h-4 animate-spin" />
+              )}
+            </div>
             <p className="text-xs text-muted-foreground">
-              4 published articles, 2 drafts{' '}
+              {totalArticles !== null
+                ? `${totalArticles} published articles`
+                : `Loading...`}
             </p>
           </div>
         </div>
@@ -32,9 +107,19 @@ function AdminDashboard() {
             <MessageSquare className="size-4 text-muted-foreground" />
           </div>
           <div>
-            <div className="text-2xl font-bold">6</div>
+            <div className="text-2xl font-bold">
+              {totalComments !== null ? (
+                totalComments
+              ) : (
+                <Loader className="w-4 h-4 animate-spin" />
+              )}
+            </div>
             <p className="text-xs text-muted-foreground">
-              1.2 comments per article avg.{' '}
+              {totalComments !== null && totalArticles !== null
+                ? `${(totalComments / totalArticles).toFixed(
+                    1,
+                  )} comments per article avg.`
+                : 'Loading..'}
             </p>
           </div>
         </div>
@@ -46,8 +131,18 @@ function AdminDashboard() {
             <Users className="size-4 text-muted-foreground" />
           </div>
           <div>
-            <div className="text-2xl font-bold">5</div>
-            <p className="text-xs text-muted-foreground">1 administrators </p>
+            <div className="text-2xl font-bold">
+              {userStats.count !== null ? (
+                userStats.count
+              ) : (
+                <Loader className="w-4 h-4 animate-spin" />
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {userStats.profileRole !== null
+                ? `${userStats.profileRole} administrator`
+                : 'Loading...'}
+            </p>
           </div>
         </div>
 
@@ -104,29 +199,38 @@ function AdminDashboard() {
 
         {/*  looped latest articles */}
         <div className="space-y-3 mt-4">
-          <div className="flex items-start justify-between">
-            <div>
-              {/*should be a link */}
-              <h4 className="font-medium hover:underline">
-                Building APIs with Express and Node.js
-              </h4>
-              <div className="flex items-center gap-2 mt-1">
-                <span
-                  className={`px-2 py-1 rounded-full text-xs bg-green-100 text-green-800`}
+          {latestArticles.map((article) => (
+            <div
+              key={article.id}
+              className="flex flex-col md:flex-row items-start justify-between border-b border-gray-300 mb-4 pb-4 md:border-none md:mb-0 "
+            >
+              <div>
+                <Link
+                  to={`/article/${article.slug}`}
+                  className="font-medium hover:underline"
                 >
-                  published
-                </span>
-                <span className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
-                  design
-                </span>
-                <span className="text-xs text-muted-foreground">6/30/2025</span>
+                  {article.title}
+                </Link>
+                <div className="w-full flex items-center gap-2 mt-1">
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs bg-green-100 text-green-800`}
+                  >
+                    {article.published ? 'published' : 'draft'}
+                  </span>
+                  <span className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
+                    {article.tag}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {formatIntl(article.created_at)}
+                  </span>
+                </div>
+              </div>
+              {/*Article description */}
+              <div className="line-clamp-1 md:line-clamp-none text-muted-foreground text-sm">
+                {article.description}
               </div>
             </div>
-            {/*Article description */}
-            <div className="text-muted-foreground text-sm">
-              A step-by-step guide to building RESTful APIs
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
