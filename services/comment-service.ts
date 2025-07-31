@@ -63,3 +63,17 @@ export const getCommentsForArticle = async (articleId: string) => {
 
   return comments;
 };
+
+// Fetching total comments
+export const getTotalCommentsCount = async () => {
+  const { count, error } = await supabase
+    .from('comments')
+    .select('*', { count: 'exact', head: true });
+
+  if (error) {
+    console.error('Error fetching total comments: ', error.message);
+    throw error;
+  }
+
+  return count;
+};
