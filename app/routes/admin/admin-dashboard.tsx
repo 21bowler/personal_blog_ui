@@ -62,7 +62,6 @@ function AdminDashboard() {
     const getLatest = async () => {
       const latest = await fetchLatestArticles();
       setLatestArticles(latest);
-      console.log('latest articles: ', latest);
     };
 
     getLatest();
