@@ -77,3 +77,19 @@ export const getTotalCommentsCount = async () => {
 
   return count;
 };
+
+// For admin dash
+export const getAllComments = async () => {
+  const { data: comments, error } = await supabase
+    .from('comments')
+    .select(
+      'id, articles(title, slug), profiles(username), content, created_at',
+    );
+
+  if (error) {
+    console.error('Error fetching all comments: ', error.message);
+    throw new Error('Error fetching all comments.');
+  }
+
+  return comments;
+};
