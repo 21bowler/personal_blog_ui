@@ -177,3 +177,33 @@ export async function updateArticleById(
     throw error;
   }
 }
+
+// Total Articles
+export async function fetchTotalArticles() {
+  const { count, error: countError } = await supabase
+    .from('articles')
+    .select('*', { count: 'exact', head: true });
+
+  if (countError) {
+    console.error('Error fetching total articles: ', countError.message);
+    throw new Error('Error fetching total articles.');
+  }
+
+  return count;
+}
+
+// fetching the latest 5 articles
+export async function fetchLatestArticles() {
+  const { data: articles, error: articlesError } = await supabase
+    .from('articles')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(5);
+
+  if (articlesError) {
+    console.error('Error fetching latest 5 articles: ', articlesError.message);
+    throw new Error('Failed to fetch the latest 5 articles.');
+  }
+
+  return articles;
+}
