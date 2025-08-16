@@ -6,7 +6,12 @@ import {
   ArrowRightIcon,
 } from '@heroicons/react/24/outline';
 import AuthorMeta from './AuthorMeta';
+import { Form } from 'react-router';
 import { formatIntl, formatTimeAgo } from '../lib/utility';
+import { type FormEvent } from 'react';
+import { createComment } from '../services/comment-service';
+import { getCurrentSession } from '../services/auth-service';
+import { toast } from 'sonner';
 
 type ArticleDetailsProps = {
   title: string;
@@ -94,27 +99,29 @@ const BlogDetails = ({
             <h3 className="text-2xl font-bold mb-6">Comments 4</h3>
 
             <div>
-              <form>
+              <Form onSubmit={handleSubmitComment}>
                 <label htmlFor="comment">Comment</label>
                 <textarea
                   id="comment"
                   rows={4}
+                  name="comment"
                   className="w-full p-2 text-sm border border-muted-foreground rounded-md text-gray-600"
                   placeholder="share your thoughts..."
+                  required
                 />
                 <button
-                  type="button"
+                  type="submit"
                   className="bg-muted-foreground text-sm text-muted px-4 py-2 rounded-lg cursor-pointer mt-1"
                 >
                   Post Comment
                 </button>
-              </form>
+              </Form>
             </div>
 
             {/* Comment List */}
             <div className="space-y-6 mt-3">
-              {comments.map((comment) => (
-                <div key={comment.user_id} className="flex gap-4">
+              {comments.map((comment, index: number) => (
+                <div key={index} className="flex gap-4">
                   <div>
                     <img
                       src={comment.profiles.avatar_url}
