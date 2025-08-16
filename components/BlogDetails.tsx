@@ -31,6 +31,29 @@ const BlogDetails = ({
   articleId,
   comments,
 }: ArticleDetailsProps) => {
+  const handleSubmitComment = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const commentContent = formData.get('comment') as string;
+
+    try {
+      const session = await getCurrentSession();
+      if (!session) throw new Error('You must be logged in to comment!');
+
+      const sessionId = session.user.id;
+      await createComment(commentContent, articleId, sessionId);
+
+      // clear form
+      // e.currentTarget.reset();
+      toast.success('Comment created successfully!');
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to create comment:', error);
+      toast.error('Failed to create comment!');
+    }
+  };
+
   return (
     <section className="relative container">
       {/*  Container */}
