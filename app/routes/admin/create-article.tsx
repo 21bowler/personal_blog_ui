@@ -85,11 +85,16 @@ const CreateArticle = () => {
   };
 
   return (
-    <section className="container">
-      <div className="p-4">
-        <h2 className="text-2xl font-semibold text-center">
-          <span className="text-violet-600">Create</span> Article
-        </h2>
+    <section className="container my-6">
+      <div className="">
+        <div className="my-4">
+          <h2 className="text-3xl font-bold tracking-tight">
+            <span className="text-violet-600">Create</span> Article
+          </h2>
+          <p className="text-muted-foreground">
+            Manage article creation for the users
+          </p>
+        </div>
 
         <Form
           className="max-w-xl p-6 shadow-sm mt-2 space-y-6 mx-auto bg-white rounded-lg"
