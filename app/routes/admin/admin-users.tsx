@@ -1,7 +1,38 @@
 import { MoreHorizontal, Search, UserPlus } from 'lucide-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getAllProfileUsers } from '../../../services/auth-service';
+import { formatIntl } from '../../../lib/utility';
+
+type ProfileUser = {
+  id: string;
+  username: string;
+  role: string;
+  created_at: string;
+  avatar_url: string;
+};
 
 const AdminUsers = () => {
+  const [profileUser, setProfileUser] = useState<ProfileUser[]>([]);
+
+  useEffect(() => {
+    getAllProfileUsers()
+      .then((users) => setProfileUser(users))
+      .catch((error) => console.error(error));
+  }, []);
+
+  const getProfileRoleColor = (role: string): string => {
+    switch (role) {
+      case 'user':
+        return 'bg-violet-100 text-violet-600';
+      case 'admin':
+        return 'bg-red-100 text-red-600';
+      case 'editor':
+        return 'bg-yellow-100 text-yellow-600';
+      default:
+        return 'bg-violet-100 text-violet-600';
+    }
+  };
+
   return (
     <div className="space-y-6 my-4">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -11,7 +42,7 @@ const AdminUsers = () => {
             Manage user accounts and permissions
           </p>
         </div>
-        <button className="flex text-sm items-center px-4 py-2 justify-center rounded-md text-accent bg-accent-foreground">
+        <button className="flex text-sm items-center cursor-pointer px-4 py-2 justify-center rounded-md text-accent bg-accent-foreground/90 hover:bg-accent-foreground duration-300 transition-colors ease-i-out">
           <UserPlus className="mr-2 h-4 w-4" />
           New Profile
         </button>
@@ -55,35 +86,60 @@ const AdminUsers = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="t-row">
-                  <td className="t-data">
-                    <div className="flex items-center gap-2">
-                      <div className="w-10 h-10 rounded-full bg-violet-600" />
-                      <div>
-                        <div className="font-medium text-sm">BobMills</div>
-                        <div className="text-sm text-muted-foreground md:hidden">
-                          07/04/2025
+                {profileUser.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="h-24 text-center">
+                      No user data found!
+                    </td>
+                  </tr>
+                ) : (
+                  profileUser.map((user) => (
+                    <tr className="t-row">
+                      <td className="t-data">
+                        <div className="flex items-center gap-2">
+                          <div className="">
+                            <img
+                              src={user.avatar_url}
+                              alt="user avatar"
+                              className="w-12 h-12 rounded-full object-cover hidden md:block"
+                              referrerPolicy="no-referrer"
+                            />
+                          </div>
+                          <div>
+                            <div className="font-medium text-sm">
+                              {user.username}
+                            </div>
+                            <div className="text-xs text-muted-foreground md:hidden">
+                              {formatIntl(user.created_at)}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="t-data">
-                    <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-                      user
-                    </div>
-                  </td>
-                  <td className="t-data hidden md:table-cell">
-                    <div className="text-xs sm:text-sm">April 5, 2025</div>
-                  </td>
-                  <td className="t-data">
-                    <button
-                      type="button"
-                      className="cursor-pointer hover:bg-gray-200 rounded-md p-1.5"
-                    >
-                      <MoreHorizontal className="h-4 w-4" />
-                    </button>
-                  </td>
-                </tr>
+                      </td>
+                      <td className="t-data">
+                        <div
+                          className={`${getProfileRoleColor(
+                            user.role,
+                          )} inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2`}
+                        >
+                          {user.role}
+                        </div>
+                      </td>
+                      <td className="t-data hidden md:table-cell">
+                        <div className="text-xs sm:text-sm">
+                          {formatIntl(user.created_at)}
+                        </div>
+                      </td>
+                      <td className="t-data">
+                        <button
+                          type="button"
+                          className="cursor-pointer hover:bg-gray-200 rounded-md p-1.5"
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
