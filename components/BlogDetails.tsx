@@ -31,17 +31,6 @@ const BlogDetails = ({
   articleId,
   comments,
 }: ArticleDetailsProps) => {
-  console.log(
-    title,
-    date,
-    imgUrl,
-    author,
-    tag,
-    description,
-    content,
-    articleId,
-    comments,
-  );
   return (
     <section className="relative container">
       {/*  Container */}
