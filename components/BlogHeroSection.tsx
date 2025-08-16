@@ -5,7 +5,7 @@ const BlogHeroSection = () => {
     <section className="hero container">
       <p className="pill">Our blog</p>
       <div>
-        <h2>The DevLog blog</h2>
+        <h2>All Articles</h2>
         <p>A blog about development, Learning and New Technologies</p>
         <div className="relative">
           <MagnifyingGlassIcon className="absolute top-2.5 size-5 left-3 text-gray-600 z-10 pointer-events-none" />
