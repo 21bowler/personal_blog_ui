@@ -98,6 +98,20 @@ export const getProfileUser = async (userId: string) => {
   return data;
 };
 
+// Fetching all profile users
+export const getAllProfileUsers = async () => {
+  const { data: profileData, error: profileError } = await supabase
+    .from('profiles')
+    .select('*');
+
+  if (profileError) {
+    console.error('Error fetching all profile users:', profileError.message);
+    throw new Error('Error fetching all profile users');
+  }
+
+  return profileData;
+};
+
 export const fetchProfile = async (userId: string) => {
   const { data: profile, error } = await supabase
     .from('profiles')
@@ -143,6 +157,29 @@ export const signInWithGoogle = async () => {
 
   // data containing user info - session
   return data;
+};
+
+// fetch total users
+export const getTotalUsers = async () => {
+  const { count, error } = await supabase
+    .from('profiles')
+    .select('*', { count: 'exact', head: true });
+
+  const { count: profileRole, error: profileError } = await supabase
+    .from('profiles')
+    .select('role', { count: 'exact' });
+
+  if (profileError) {
+    console.error('Error fetching total roles: ', profileError.message);
+    throw new Error('Error fetching total roles.');
+  }
+
+  if (error) {
+    console.error('Error fetching total users: ', error.message);
+    throw new Error('Error fetching total users.');
+  }
+
+  return { count, profileRole };
 };
 
 // Sign Out the Current User
