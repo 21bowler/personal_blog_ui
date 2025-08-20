@@ -1,13 +1,30 @@
 import React from 'react';
 import AuthorMeta from './AuthorMeta';
-import ActionButton from './ActionBtn';
+import { Badge } from '~/components/ui/badge';
+import { StarIcon, ArrowRightIcon } from 'lucide-react';
+import { Button } from '~/components/ui/button';
+import { Link } from 'react-router';
 
 const EditorsPick = () => {
   return (
-    <section className="container">
+    <section className="container mb-16">
       <div className="">
-        <h3 className="text-3xl font-semibold mt-8">Editor's Pick</h3>
-        <hr className="mt-3 text-gray-300" />
+        <div className="text-center mt-10 mb-16">
+          <Badge variant="secondary" className="mb-4">
+            <StarIcon className="size-4 mr-1" />
+            Editor's Pick
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Featured Articles
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Hand-picked articles that showcase the latest trends, best
+            practices, and innovative solutions in web development.
+          </p>
+        </div>
+
+        {/* Editor's cards */}
+
         <div className="my-6 flex flex-col items-center gap-4 sm:flex-row">
           <div className="w-full sm:w-100">
             <div className="w-full h-96 rounded-lg bg-gray-400 animate-pulse sm:w-100" />
@@ -25,9 +42,19 @@ const EditorsPick = () => {
             {/*Author metadata */}
             <AuthorMeta justify="justify-start" />
             <div className="inline-block mt-4 sm:mt-0">
-              <ActionButton />
+              {/*<ActionButton />*/}
             </div>
           </div>
+        </div>
+
+        {/*  view all */}
+        <div>
+          <Button asChild variant="outline">
+            <Link to="/blogs">
+              View All Articles
+              <ArrowRightIcon className="size-5" />{' '}
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
