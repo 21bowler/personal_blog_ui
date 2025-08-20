@@ -41,8 +41,8 @@ const HeroSection = () => {
         id="about"
         className="flex flex-col text-center space-y-4 text-white bg-[#0A190F] py-[2rem]"
       >
-        <h3 className="text-3xl font-bold">About Devish</h3>
-        <p className="text-sm sm:text-base px-2 self-center space-y-2 text-amber-100 sm:w-1/2">
+        <h3 className="text-3xl md:text-4xl font-bold">About Devish</h3>
+        <p className="text-xl px-2 self-center text-muted-foreground space-y-2  sm:w-1/2">
           Devlog is my personal blog where I document my journey as a developer
           — from building side projects and learning new tech to sharing
           tutorials and insights. It's a space to learn in public, grow through
