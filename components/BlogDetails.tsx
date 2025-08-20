@@ -124,7 +124,10 @@ const BlogDetails = ({
                 <div key={index} className="flex gap-4">
                   <div>
                     <img
-                      src={comment.profiles.avatar_url}
+                      src={comment.profiles.avatar_url?.replace(
+                        '=s96-c',
+                        '=s192-c',
+                      )}
                       alt={comment.username}
                       className="w-6 h-6 rounded-full"
                     />
