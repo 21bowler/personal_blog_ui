@@ -1,27 +1,42 @@
 import { Link } from 'react-router';
 import { ArrowDownIcon, ArrowRightIcon } from '@heroicons/react/24/solid';
-import ActionButton from './ActionBtn';
+import { StarIcon } from 'lucide-react';
+import { Badge } from '~/components/ui/badge';
+import { Button } from '~/components/ui/button';
 
 const HeroSection = () => {
   return (
     <>
       <section className="container">
         <div className="relative space-y-2 py-22 ">
-          <h2 className="font-bold text-3xl sm:text-5xl ">
+          <div>
+            <Badge variant="secondary" className="mb-4">
+              <StarIcon className="size-4" />
+              Welcome to devish
+            </Badge>
+          </div>
+
+          <h2 className="font-bold text-4xl md:text-6xl lg:text-7xl leading-tight">
             Code. <span className="text-blue-600">Create</span>. Share
           </h2>
-          <p className="text-base text-gray-600 sm:w-1/2">
+          <p className="text-xl text-muted-foreground sm:w-1/2">
             Devish is where I share Web Development Tutorials, thoughts, and
             experiments from my coding Journey.
           </p>
           <div className="flex items-center py-2 gap-4">
-            <ActionButton />
-            <Link
-              to="/"
-              className="flex text-sm items-center gap-4 bg-white text-black py-4 px-8 rounded-full transition-all hover:shadow-lg hover:shadow-md"
+            <Button
+              asChild
+              size="sm"
+              className="bg-burnham-600 transition-colors hover:bg-burnham-700"
             >
-              Read more
-            </Link>
+              <Link to="/blogs">
+                Explore Articles
+                <ArrowRightIcon className="w-5 h-5" />
+              </Link>
+            </Button>
+            <Button variant="outline" size="sm">
+              <Link to="#about">Learn More</Link>
+            </Button>
           </div>
 
           {/*  Explore More btn*/}
