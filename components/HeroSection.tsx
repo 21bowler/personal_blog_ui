@@ -39,7 +39,7 @@ const HeroSection = () => {
       {/* About Devish Section */}
       <section
         id="about"
-        className="flex flex-col text-center space-y-4 text-white bg-[#0A190F] py-[2rem]"
+        className="flex flex-col text-center bg-muted space-y-4 py-[2rem]"
       >
         <h3 className="text-3xl md:text-4xl font-bold">About Devish</h3>
         <p className="text-xl px-2 self-center text-muted-foreground space-y-2  sm:w-1/2">
