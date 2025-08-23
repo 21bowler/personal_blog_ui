@@ -90,7 +90,7 @@ const BlogDetails = ({
           </div>
 
           {/*  article content */}
-          <div className="prose prose-lg max-w-none mb-12">
+          <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
             <div dangerouslySetInnerHTML={{ __html: content }} />
           </div>
 
