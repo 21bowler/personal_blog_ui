@@ -2,6 +2,9 @@
 /*---break---*/
 @custom-variant dark (&:is(.dark *));
 
+/* Plugins */
+@plugin "@tailwindcss/typography";
+
 /*@import "tailwindcss-animate";*/
 
 @theme {
