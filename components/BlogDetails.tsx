@@ -62,13 +62,13 @@ const BlogDetails = ({
   return (
     <section className="relative container">
       {/*  Container */}
-      <div className="pt-4 pb-8">
+      <div className="pt-4 pb-8 max-w-4xl mx-auto">
         {/* Header details meta data */}
         <div>
           <h2 className="font-semibold text-balanced text-center leading-tight text-3xl sm:text-5xl">
             {title}
           </h2>
-          <p className="text-muted-foreground mb-6 text-sm text-center sm:text-xl">
+          <p className="text-muted-foreground mb-6 text-sm text-center sm:text-xl max-w-2xl mx-auto">
             {description}
           </p>
 
