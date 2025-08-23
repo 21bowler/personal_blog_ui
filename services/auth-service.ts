@@ -79,7 +79,9 @@ export const getCurrentUser = async (): Promise<User | null> => {
 };
 
 // fetching from the profile table
-export const getProfileUser = async (userId: string) => {
+export const getProfileUser = async (
+  userId: string,
+): Promise<{ role: string }> => {
   const { data, error } = await supabase
     .from('profiles')
     .select('role')
