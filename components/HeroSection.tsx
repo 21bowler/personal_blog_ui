@@ -58,7 +58,7 @@ const HeroSection = () => {
       >
         <h3 className="text-3xl md:text-4xl font-bold">About Devish</h3>
         <p className="text-xl px-2 self-center text-muted-foreground space-y-2  sm:w-1/2">
-          Devlog is my personal blog where I document my journey as a developer
+          Devish is my personal blog where I document my journey as a developer
           — from building side projects and learning new tech to sharing
           tutorials and insights. It's a space to learn in public, grow through
           writing, and connect with like-minded devs.
