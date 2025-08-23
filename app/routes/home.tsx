@@ -12,10 +12,10 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
   return (
-    <>
+    <div className="max-w-4xl mx-auto">
       <HeroSection />
       <EditorsPick />
       <CallToAction />
-    </>
+    </div>
   );
 }
