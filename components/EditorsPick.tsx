@@ -4,11 +4,13 @@ import { Badge } from '~/components/ui/badge';
 import { StarIcon, ArrowRightIcon } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 import { Link } from 'react-router';
+import { editorsPicks } from '../lib/data';
+import ArticleCard from './ArticleCard';
 
 const EditorsPick = () => {
   return (
     <section className="container mb-16">
-      <div className="">
+      <div className="max-w-4xl mx-auto">
         <div className="text-center mt-10 mb-16">
           <Badge variant="secondary" className="mb-4">
             <StarIcon className="size-4 mr-1" />
@@ -25,30 +27,27 @@ const EditorsPick = () => {
 
         {/* Editor's cards */}
 
-        <div className="my-6 flex flex-col items-center gap-4 sm:flex-row">
-          <div className="w-full sm:w-100">
-            <div className="w-full h-96 rounded-lg bg-gray-400 animate-pulse sm:w-100" />
-          </div>
-          <div className="editors-pick-content">
-            <span className="text-burnham-500 text-sm">Javascript</span>
-            <h4 className="font-semibold text-lg mb-4">
-              Minimalism Isn't Dead: Its Just Smarter.
-            </h4>
-            <p className="text-sm sm:text-base text-gray-600">
-              In this post, I break down how sharing your journey online
-              accelerates learning, builds accountability, and connects you with
-              a supportive dev community
-            </p>
-            {/*Author metadata */}
-            <AuthorMeta justify="justify-start" />
-            <div className="inline-block mt-4 sm:mt-0">
-              {/*<ActionButton />*/}
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {editorsPicks.map((article, index) => (
+            <div
+              key={article.id}
+              className={` ${index === 0 ? 'md:col-span-2 lg:col-span-1' : ''}`}
+            >
+              <ArticleCard
+                title={article.title}
+                author={article.author}
+                tag={article.tag}
+                date={article.created_at}
+                description={article.description}
+                imgUrl={article.image_url}
+                slug={article.slug}
+              />
             </div>
-          </div>
+          ))}
         </div>
 
         {/*  view all */}
-        <div>
+        <div className="mt-12 text-center">
           <Button asChild variant="outline">
             <Link to="/blogs">
               View All Articles
