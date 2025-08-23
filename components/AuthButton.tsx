@@ -1,8 +1,13 @@
 import type { User } from '@supabase/supabase-js';
 import { Link, useNavigate } from 'react-router';
 import { UserCircleIcon, TrashIcon, UserIcon } from '@heroicons/react/24/solid';
+import { LayoutDashboardIcon } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
-import { signOut } from '../services/auth-service';
+import {
+  getProfileUser,
+  signOut,
+  getCurrentSession,
+} from '../services/auth-service';
 
 type AuthButtonsProps = {
   user: User | null;
@@ -16,8 +21,24 @@ type UserRole = {
 
 export const AuthButton = ({ user, variant, onAction }: AuthButtonsProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [userRole, setUserRole] = useState<UserRole | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) return;
+
+      try {
+        const role = await getProfileUser(user.id);
+        setUserRole(role);
+      } catch (error) {
+        console.error('Error fetching user role:', error);
+      }
+    };
+
+    fetchProfile().catch(console.error);
+  }, [user]);
 
   useEffect(() => {
     if (variant === 'desktop') {
@@ -97,9 +118,19 @@ export const AuthButton = ({ user, variant, onAction }: AuthButtonsProps) => {
           <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-200">
             {user.email}
           </div>
+          {userRole?.role === 'admin' && (
+            <Link
+              to="/admin"
+              className="flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              onClick={() => setIsDropdownOpen(false)}
+            >
+              <LayoutDashboardIcon className="w-5 h-5 mr-2" />
+              Admin Dash
+            </Link>
+          )}
           <Link
             to="/profile"
-            className="block flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            className=" flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             onClick={() => setIsDropdownOpen(false)}
           >
             <UserIcon className="w-5 h-5 mr-2" />
