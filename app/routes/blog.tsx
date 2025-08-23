@@ -1,10 +1,11 @@
 import type { Route } from './+types/blog';
 import { useState } from 'react';
-import BlogHeroSection from '../../components/BlogHeroSection';
 import ArticleCard from '../../components/ArticleCard';
-import { articleResources } from '../../lib/data';
 import Pagination from '../../components/Pagination';
 import { fetchAllArticles } from 'services/articleService';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { StarIcon } from 'lucide-react';
+import { Badge } from '~/components/ui/badge';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -25,6 +26,7 @@ const Blog = ({ loaderData }: Route.ComponentProps) => {
   const fetchedArticles = loaderData.allArticles;
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState('');
 
   const totalPages = Math.ceil(fetchedArticles.length / ITEMS_PER_PAGE);
   const indexOfStartArticle = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -42,32 +44,58 @@ const Blog = ({ loaderData }: Route.ComponentProps) => {
   return (
     <section className="container">
       <div>
-        <BlogHeroSection />
+        {/*<BlogHeroSection />*/}
+        {/* search functionality */}
+        <div className="hero container">
+          <Badge variant="secondary">
+            <StarIcon className="w-4 h-4 mr-1" />
+            Our Blog
+          </Badge>
+          <div>
+            <h2>All Articles</h2>
+            <p>A blog about development, Learning and New Technologies</p>
+            <div className="relative">
+              <MagnifyingGlassIcon className="absolute top-2.5 size-5 left-3 text-gray-600 z-10 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search for article"
+                className="search"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
 
         {/*Blog cards below*/}
         <div className="articles-grid mb-10 container">
-          {currentArticles.map(
-            ({
-              title,
-              description,
-              tag,
-              author,
-              image_url,
-              created_at,
-              slug,
-            }) => (
-              <ArticleCard
-                key={title}
-                title={title}
-                description={description}
-                imgUrl={image_url}
-                tag={tag}
-                date={created_at}
-                author={author}
-                slug={slug}
-              />
-            ),
-          )}
+          {currentArticles
+            .filter((article) => {
+              return search.toLowerCase() === ''
+                ? article
+                : article.title.toLowerCase().includes(search.toLowerCase());
+            })
+            .map(
+              ({
+                title,
+                description,
+                tag,
+                author,
+                image_url,
+                created_at,
+                slug,
+              }) => (
+                <ArticleCard
+                  key={title}
+                  title={title}
+                  description={description}
+                  imgUrl={image_url}
+                  tag={tag}
+                  date={created_at}
+                  author={author}
+                  slug={slug}
+                />
+              ),
+            )}
         </div>
 
         {/*  Pagination */}
