@@ -28,6 +28,46 @@ export const adminLinks = [
   },
 ];
 
+// Mock data for editor's picks
+export const editorsPicks = [
+  {
+    id: 1,
+    title: 'The Future of Web Development: Trends to Watch in 2024',
+    tag: 'Technology',
+    description:
+      'Explore the latest trends and technologies shaping the future of web development.',
+    author: 'Sam Wachira',
+    image_url:
+      '/placeholder.svg?height=300&width=400&text=Web+Development+Trends',
+    created_at: '2025-01-15T10:30:00Z',
+    slug: 'future-of-web-development-2024',
+    featured: true,
+  },
+  {
+    id: 2,
+    title: 'Building Scalable React Applications',
+    tag: 'React',
+    description:
+      'Learn best practices for building React applications that scale.',
+    author: 'Sam Wachira',
+    image_url: '/placeholder.svg?height=300&width=400&text=React+Applications',
+    created_at: '2025-01-10T08:00:00Z',
+    slug: 'building-scalable-react-applications',
+    featured: true,
+  },
+  {
+    id: 3,
+    title: 'CSS Grid vs Flexbox: When to Use What',
+    tag: 'CSS',
+    description: 'A comprehensive guide to understanding CSS layout methods.',
+    author: 'Sam Wachira',
+    image_url: '/placeholder.svg?height=300&width=400&text=CSS+Layout+Guide',
+    created_at: '2025-01-08T15:30:00Z',
+    slug: 'css-grid-vs-flexbox',
+    featured: true,
+  },
+];
+
 export const articleResources = [
   {
     title: 'The Future of User-Centered Design',
