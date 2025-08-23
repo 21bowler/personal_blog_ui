@@ -10,6 +10,10 @@ type AuthButtonsProps = {
   onAction?: () => void; // Optional callback for mobile menu closing
 };
 
+type UserRole = {
+  role: string;
+};
+
 export const AuthButton = ({ user, variant, onAction }: AuthButtonsProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
