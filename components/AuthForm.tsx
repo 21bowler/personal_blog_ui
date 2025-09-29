@@ -82,6 +82,7 @@ const AuthForm = ({
                     type="email"
                     id="email"
                     placeholder="you@example.com"
+                    name="email"
                     className="box-border rounded-md shadow-sm outline-none focus:ring-current focus:ring-2 border text-sm px-4 py-2 w-full"
                   />
                 </div>
@@ -100,6 +101,7 @@ const AuthForm = ({
                       type={showPassword ? 'text' : 'password'}
                       id="password"
                       placeholder="•••••••"
+                      name="password"
                       className="box-border rounded-md shadow-sm outline-none focus:ring-current focus:ring-2 border text-sm px-4 py-2 w-full"
                     />
                     <div className="absolute inset-y-0 right-0 pl-3 pr-1 flex space-x-1 items-center">
