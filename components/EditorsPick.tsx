@@ -1,13 +1,45 @@
-import React from 'react';
-import AuthorMeta from './AuthorMeta';
+import { useEffect, useState } from 'react';
 import { Badge } from '~/components/ui/badge';
 import { StarIcon, ArrowRightIcon } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 import { Link } from 'react-router';
-import { editorsPicks } from '../lib/data';
 import ArticleCard from './ArticleCard';
+import { fetchFeaturedArticles } from '../services/articleService';
+import type { Article } from '../lib/types';
 
 const EditorsPick = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const featuredArticles = await fetchFeaturedArticles();
+        setArticles(featuredArticles);
+      } catch (err) {
+        setError('Failed to load featured articles');
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
+
+  // Render error when it occurs
+  if (error) {
+    return <div className="text-center text-lg text-red-500">{error}</div>;
+  }
+
+  // Show loading state while fetching the data.
+  if (isLoading) {
+    return (
+      <div className="text-xl text-center p-4">
+        Loading featured articles...
+      </div>
+    );
+  }
+
   return (
     <section className="container mb-16">
       <div className="max-w-4xl mx-auto">
@@ -28,7 +60,7 @@ const EditorsPick = () => {
         {/* Editor's cards */}
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {editorsPicks.map((article, index) => (
+          {articles.map((article, index) => (
             <div
               key={article.id}
               className={` ${index === 0 ? 'md:col-span-2 lg:col-span-1' : ''}`}
