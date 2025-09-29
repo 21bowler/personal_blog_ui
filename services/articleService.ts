@@ -192,6 +192,22 @@ export async function fetchTotalArticles() {
   return count;
 }
 
+//fetch featured articles
+export async function fetchFeaturedArticles(limit: number = 3) {
+  const { data: articles, error } = await supabase
+    .from('articles')
+    .select('*')
+    .order('created_at', { ascending: false }) // gets the latest 3 articles
+    .limit(limit);
+
+  if (error) {
+    console.error('Error fetching featured articles: ', error.message);
+    throw new Error('Failed to fetch featured articles.');
+  }
+
+  return articles;
+}
+
 // fetching the latest 5 articles
 export async function fetchLatestArticles() {
   const { data: articles, error: articlesError } = await supabase
