@@ -6,22 +6,14 @@ import {
   Trash2,
 } from 'lucide-react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { getAllComments } from '../../../services/comment-service';
+import {
+  deleteComment,
+  getAllComments,
+} from '../../../services/comment-service';
 import { formatIntl } from '../../../lib/utility';
 import { Link } from 'react-router';
-
-interface Comment {
-  articles: {
-    title: string;
-    slug: string;
-  };
-  content: string;
-  created_at: string;
-  id: number;
-  profiles: {
-    username: string;
-  };
-}
+import { toast } from 'sonner';
+import type { Comment } from '../../../lib/types';
 
 // Create a separate action menu component to handle Speed.
 const ActionMenu = memo(
@@ -60,8 +52,21 @@ const AdminComments = () => {
   }, []);
 
   //  memoized delete comment handler
-  const handleCommentDelete = useCallback((commentId: number) => {
-    console.log(`Comment with ${commentId} deleted`);
+  const handleCommentDelete = useCallback(async (commentId: number) => {
+    if (!commentId) return;
+
+    try {
+      console.log(`Comment with ${commentId} deleted`);
+      await deleteComment(commentId);
+      toast.success(`Comment with ID: ${commentId} successfully deleted!`);
+
+      // refresh the comment list after deletion.
+      const updatedComments = await getAllComments();
+      setComments(updatedComments);
+    } catch (err: any) {
+      console.error(err);
+      toast.error(`Failed to delete comment with ID: ${commentId}`);
+    }
   }, []);
 
   useEffect(() => {
@@ -86,7 +91,6 @@ const AdminComments = () => {
     getAllComments()
       .then((allComments) => {
         setComments(allComments);
-        console.log('Checking comments: ', allComments);
       })
       .catch((err) => console.error(err));
   }, []);
