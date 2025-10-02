@@ -94,7 +94,7 @@ const AdminUsers = () => {
                   </tr>
                 ) : (
                   profileUser.map((user) => (
-                    <tr className="t-row">
+                    <tr key={user.id} className="t-row">
                       <td className="t-data">
                         <div className="flex items-center gap-2">
                           <div className="">
