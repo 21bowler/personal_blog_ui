@@ -136,6 +136,16 @@ const AdminUsers = () => {
                         >
                           <MoreHorizontal className="h-4 w-4" />
                         </button>
+
+                        {/* Action btn */}
+                        {actionDropDownId === user.id && (
+                          <ActionMenu
+                            onEdit={() =>
+                              console.log('Edit has been clicked!!')
+                            }
+                            onDelete={() => handleDeleteUser(user.id)}
+                          />
+                        )}
                       </td>
                     </tr>
                   ))
