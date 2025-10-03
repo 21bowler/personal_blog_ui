@@ -42,7 +42,7 @@ const AdminUsers = () => {
             Manage user accounts and permissions
           </p>
         </div>
-        <button className="flex text-sm items-center cursor-pointer px-4 py-2 justify-center rounded-md text-accent bg-accent-foreground/90 hover:bg-accent-foreground duration-300 transition-colors ease-i-out">
+        <button className="flex text-sm items-center cursor-pointer px-4 py-2 justify-center rounded-md text-accent bg-accent-foreground/90 hover:bg-accent-foreground duration-300 transition-colors ease-in-out">
           <UserPlus className="mr-2 h-4 w-4" />
           New Profile
         </button>
