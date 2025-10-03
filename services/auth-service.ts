@@ -14,10 +14,22 @@ export interface SignUpCredentials {
 export const signUp = async (credentials: SignInCredentials) => {
   const { data, error } = await supabase.auth.signUp(credentials);
 
-  if (error) {
-    console.error('Error signing up: ', error.message);
-    throw new Error('Error signing up');
-  }
+    if (error) {
+      console.error('Detailed Signup Error: ', {
+        message: error.message,
+        status: error.status,
+        name: error.name,
+        details: error,
+      });
+      throw error;
+    }
+
+    //! Log the successful response - for debugging
+    // console.log('Signup Response:', {
+    //   hasUser: !!data.user,
+    //   hasSession: !!data.session,
+    //   userMetadata: data.user?.user_metadata,
+    // });
 
   return data;
 };
