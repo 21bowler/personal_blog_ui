@@ -1,24 +1,47 @@
-import { MoreHorizontal, Search, UserPlus } from 'lucide-react';
+import { Search, UserPlus, Trash2, Pencil } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { getAllProfileUsers } from '../../../services/auth-service';
+import {
+  getAllProfileUsers,
+  deleteUserFromProfile,
+} from '../../../services/auth-service';
 import { formatIntl } from '../../../lib/utility';
-
-type ProfileUser = {
-  id: string;
-  username: string;
-  role: string;
-  created_at: string;
-  avatar_url: string;
-};
+import type { ProfileUser } from 'lib/types';
+import { toast } from 'sonner';
+import DeletePopup from '../../../components/DeletePopup';
 
 const AdminUsers = () => {
   const [profileUser, setProfileUser] = useState<ProfileUser[]>([]);
+  const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   useEffect(() => {
     getAllProfileUsers()
       .then((users) => setProfileUser(users))
       .catch((error) => console.error(error));
   }, []);
+
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      await deleteUserFromProfile(userId);
+
+      toast.success(`User deleted successfully.`);
+
+      // refresh the user list after deletion.
+      const updatedUsers = await getAllProfileUsers();
+      setProfileUser(updatedUsers);
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.message || 'Error deleting user. Please, try again!');
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (selectedUserId) {
+      await handleDeleteUser(selectedUserId);
+      setShowDeletePopup(false);
+      setSelectedUserId(null);
+    }
+  };
 
   const getProfileRoleColor = (role: string): string => {
     switch (role) {
@@ -74,8 +97,20 @@ const AdminUsers = () => {
             </div>
           </div>
 
+          {/* Delete Pop up */}
+          {showDeletePopup && (
+            <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+              <DeletePopup
+                onConfirm={handleDeleteConfirm}
+                onCancel={() => {
+                  setShowDeletePopup(false);
+                }}
+              />
+            </div>
+          )}
+
           {/*  User Table */}
-          <div className="rounded-md border border-gray-300">
+          <div className="rounded-md border border-gray-300 relative overflow-auto">
             <table className="w-full">
               <thead>
                 <tr className="t-row text-sm text-muted-foreground font-light">
@@ -130,22 +165,28 @@ const AdminUsers = () => {
                         </div>
                       </td>
                       <td className="t-data">
-                        <button
-                          type="button"
-                          className="cursor-pointer hover:bg-gray-200 rounded-md p-1.5"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                        </button>
-
-                        {/* Action btn */}
-                        {actionDropDownId === user.id && (
-                          <ActionMenu
-                            onEdit={() =>
-                              console.log('Edit has been clicked!!')
+                        <div className="flex gap-3 items-center py-2">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              console.log(`Edit ${user.id} clicked!!`)
                             }
-                            onDelete={() => handleDeleteUser(user.id)}
-                          />
-                        )}
+                            className="cursor-pointer border border-muted-foreground/70 bg-destructive-foreground/70 p-1.5 rounded-md hover:border-muted-foreground ease-in-out duration-200 hover:bg-destructive-foreground"
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSelectedUserId(user.id);
+                              setShowDeletePopup(true);
+                            }}
+                            className="cursor-pointer border border-muted-foreground/70 bg-destructive-foreground/70 p-1.5 rounded-md hover:border-muted-foreground ease-in-out duration-200 hover:bg-destructive-foreground"
+                          >
+                            <Trash2 className="w-4 h-4 text-destructive" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
