@@ -72,8 +72,6 @@ const BlogDetails = ({
     }
   };
 
-  console.log('Seeing comments: ', comments);
-
   return (
     <section className="relative container">
       {/*  Container */}
