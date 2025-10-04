@@ -42,8 +42,9 @@ export function HydrateFallback() {
 }
 
 const Profile = ({ loaderData }: Route.ComponentProps) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
   const { username, avatarUrl, joinedAt, email, provider } = loaderData;
 
   const isEmailProvider = provider === 'email';
