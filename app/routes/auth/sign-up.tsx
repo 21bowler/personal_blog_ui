@@ -11,6 +11,10 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 
   //Basic validation
   if (!email || !password) {
+    console.log('Validation Failed:', {
+      hasEmail: !!email,
+      hasPassword: !!password,
+    });
     return {
       error: 'Please enter a valid email and password',
     };
@@ -23,17 +27,26 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     const { user } = await signUp(credentials);
 
     if (user) {
-      toast.success('Signed up successfully!');
+      toast.success(
+        'Success sign up, click the confirmation link sent to your email.',
+      );
+
       return redirect('/');
     } else {
+      console.error('No user data returned from sign-up.');
       return {
         error:
           'Sign-up process completed, but no user data returned. Check Supabase settings.',
       };
     }
   } catch (error: any) {
-    console.error('Sign-up action error: ', error);
+    // console.error('Sign-up action error: ', error);
 
+    console.error('Detailed sign-up error:', {
+      message: error.message,
+      cause: error.cause,
+      stack: error.stack,
+    });
     // return to the UI
     return {
       error: error.message || 'An unexpected error occurred during sign-up.',
