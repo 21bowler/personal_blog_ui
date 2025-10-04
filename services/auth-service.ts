@@ -58,6 +58,20 @@ export const signInUser = async (credentials: SignUpCredentials) => {
   return data;
 };
 
+/**Update user password */
+export const updateUserPassword = async (changedPassword: string) => {
+  const { data, error } = await supabase.auth.updateUser({
+    password: changedPassword,
+  });
+
+  if (error) {
+    console.error('Error updating user password: ', error.message);
+    throw error;
+  }
+
+  return data;
+};
+
 // Get Current User logged In
 export const getCurrentUser = async (): Promise<User | null> => {
   try {
