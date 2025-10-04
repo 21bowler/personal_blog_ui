@@ -12,7 +12,9 @@ export interface SignUpCredentials {
 }
 
 export const signUp = async (credentials: SignInCredentials) => {
-  const { data, error } = await supabase.auth.signUp(credentials);
+  try {
+    // Add specific options for signup
+    const { data, error } = await supabase.auth.signUp(credentials);
 
     if (error) {
       console.error('Detailed Signup Error: ', {
@@ -31,7 +33,11 @@ export const signUp = async (credentials: SignInCredentials) => {
     //   userMetadata: data.user?.user_metadata,
     // });
 
-  return data;
+    return data;
+  } catch (err: any) {
+    console.error('Signup process Error:', err);
+    throw err;
+  }
 };
 
 export const signInUser = async (credentials: SignUpCredentials) => {
@@ -39,7 +45,7 @@ export const signInUser = async (credentials: SignUpCredentials) => {
 
   if (error) {
     console.error('Error signing in: ', error.message);
-    throw new Error('Error signing in');
+    throw error;
   }
 
   // Log successful sign-in
@@ -203,6 +209,31 @@ export const signOut = async () => {
   if (error) {
     console.error('Error Signing Out Current User.', error.message);
     throw new Error('Error Signing Out Current User');
+  }
+};
+
+/** Delete a user from the User Auth Table - ADMIN FEATURE ONLY */
+// This will only work with the Service Role key
+export const deleteUser = async (userId: string) => {
+  const { data, error } = await supabase.auth.admin.deleteUser(userId);
+
+  if (error) {
+    console.error('Error Deleting User: ', error.message);
+    throw error;
+  }
+
+  return data;
+};
+
+export const deleteUserFromProfile = async (userId: string): Promise<void> => {
+  const { error: deleteError } = await supabase
+    .from('profiles')
+    .delete()
+    .eq('id', userId);
+
+  if (deleteError) {
+    console.error('Error Deleting User from Profile: ', deleteError.message);
+    throw deleteError;
   }
 };
 
