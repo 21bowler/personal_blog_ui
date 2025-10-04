@@ -1,10 +1,57 @@
-import { fetchProfile, getCurrentSession } from '../../services/auth-service';
-import { redirect, Form } from 'react-router';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import {
+  fetchProfile,
+  getCurrentSession,
+  updateUserPassword,
+} from '../../services/auth-service';
+import { redirect, Form, useNavigation, useActionData } from 'react-router';
+import {
+  ExclamationTriangleIcon,
+  EyeIcon,
+  EyeSlashIcon,
+} from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Loader } from 'lucide-react';
+import { Loader, LoaderCircle } from 'lucide-react';
 import type { Route } from './+types/profile';
+
+export async function clientAction({ request }: Route.ClientActionArgs) {
+  const formData = await request.formData();
+  const password = formData.get('password') as string;
+  const confirmPassword = formData.get('confirmPassword') as string;
+
+  // Basic input validation
+  if (!confirmPassword || !password) {
+    return {
+      error: 'Please fill in all fields.',
+    };
+  }
+
+  if (password !== confirmPassword) {
+    return {
+      error: 'Passwords do not match.',
+    };
+  }
+
+  try {
+    const { user } = await updateUserPassword(password);
+
+    if (user) {
+      toast.success('Password updated successfully.');
+      return redirect('/');
+    } else {
+      console.error('User not found!');
+      toast.error('Error updating password');
+    }
+  } catch (err: any) {
+    console.error('Updating error: ', err.message);
+
+    return {
+      error:
+        err.message ||
+        'An unexpected error occurred while updating your password. Please try again in a few.',
+    };
+  }
+}
 
 export async function clientLoader() {
   const session = await getCurrentSession();
@@ -42,6 +89,10 @@ export function HydrateFallback() {
 }
 
 const Profile = ({ loaderData }: Route.ComponentProps) => {
+  const actionData = useActionData();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
@@ -178,10 +229,18 @@ const Profile = ({ loaderData }: Route.ComponentProps) => {
                 </div>
 
                 <button
-                  type="button"
+                  type="submit"
+                  disabled={isSubmitting}
                   className="bg-burnham-500 cursor-pointer text-white font-regular text-sm px-4 py-2 rounded-md outline-none hover:bg-burnham-600 transition-all duration-200 ease-in-out"
                 >
-                  Save Changes
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                      <LoaderCircle className="animate-spin size-4" /> Saving
+                      Changes ...
+                    </div>
+                  ) : (
+                    'Save Changes'
+                  )}
                 </button>
               </>
             )}
