@@ -85,6 +85,15 @@ const Profile = ({ loaderData }: Route.ComponentProps) => {
         {/* Form */}
         <Form method="post" className="w-full px-4 md:w-2/3 lg:w-1/2 mx-auto">
           <div className="space-y-3">
+            <div className="">
+              {actionData?.error && (
+                <p className="bg-red-200/50 text-sm text-red-400 border flex gap-2 items-center border-red-100 rounded-md my-2 p-2">
+                  <ExclamationTriangleIcon className="size-4" />
+                  {actionData.error}
+                </p>
+              )}
+            </div>
+
             {/* email div wrapper */}
             <div className="">
               <label htmlFor="email" className="block text-sm mb-1">
