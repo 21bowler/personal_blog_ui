@@ -25,6 +25,19 @@ type ArticleDetailsProps = {
   comments: any;
 };
 
+interface CommentWithProfile {
+  content: string;
+  created_at: string;
+  profiles: {
+    username: string;
+    avatar_url: string;
+  };
+  id: number;
+  updated_at: string;
+  username: string;
+  user_id: string;
+}
+
 const BlogDetails = ({
   title,
   date,
@@ -58,6 +71,8 @@ const BlogDetails = ({
       toast.error('Failed to create comment!');
     }
   };
+
+  console.log('Seeing comments: ', comments);
 
   return (
     <section className="relative container">
@@ -120,22 +135,33 @@ const BlogDetails = ({
 
             {/* Comment List */}
             <div className="space-y-6 mt-3">
-              {comments.map((comment, index: number) => (
+              {comments.map((comment: CommentWithProfile, index: number) => (
                 <div key={index} className="flex gap-4">
                   <div>
                     <img
-                      src={comment.profiles.avatar_url?.replace(
-                        '=s96-c',
-                        '=s192-c',
-                      )}
-                      alt={comment.username}
+                      src={
+                        comment.profiles?.avatar_url?.replace(
+                          '=s96-c',
+                          '=s192-c',
+                        ) ||
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          comment.username || 'User',
+                        )}&background=random`
+                      }
+                      alt={comment.username || 'User'}
                       className="w-6 h-6 rounded-full"
+                      onError={(e) => {
+                        e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          comment.username || 'User',
+                        )}&background=random`;
+                      }}
+                      referrerPolicy="no-referrer"
                     />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <h4 className="font-semibold">
-                        {comment.profiles.username}
+                        {comment.profiles?.username}
                       </h4>
                       <span className="text-xs text-muted-foreground">
                         {formatTimeAgo(comment.created_at)}
